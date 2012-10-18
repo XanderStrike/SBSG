@@ -1,0 +1,86 @@
+<%= form_for(@employee) do |f| %>
+  <% if @employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited tis employee from being saved:</h2>
+
+      <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+
+<h3>Schedule</h3>
+<table>
+<tr>
+  <td>
+    <div class="field">
+      <%= f.label :mon_start %><br />
+      <%= f.number_field :mon_start %><br />
+      <%= f.label :mon_end %><br />
+      <%= f.number_field :mon_end %>
+    </div>
+  </td>
+  <td>
+    <div class="field">
+      <%= f.label :tue_start %><br />
+      <%= f.number_field :tue_start %><br />
+      <%= f.label :tue_end %><br />
+      <%= f.number_field :tue_end %>
+    </div>
+  </td>
+  <td>
+    <div class="field">
+      <%= f.label :wed_start %><br />
+      <%= f.number_field :wed_start %><br />
+      <%= f.label :wed_end %><br />
+      <%= f.number_field :wed_end %>
+    </div>
+  </td>
+  <td>
+    <div class="field">
+      <%= f.label :thu_start %><br />
+      <%= f.number_field :thu_start %><br />
+      <%= f.label :thu_end %><br />
+      <%= f.number_field :thu_end %>
+    </div>
+  </td>
+  <td>
+    <div class="field">
+      <%= f.label :fri_start %><br />
+      <%= f.number_field :fri_start %><br />
+      <%= f.label :fri_end %><br />
+      <%= f.number_field :fri_end %>
+    </div>
+  </td>
+  <td>
+    <div class="field">
+      <%= f.label :sat_start %><br />
+      <%= f.number_field :sat_start %><br />
+      <%= f.label :sat_end %><br />
+      <%= f.number_field :sat_end %>
+    </div>
+  </td>
+  <td>
+    <div class="field">
+      <%= f.label :sun_start %><br />
+      <%= f.number_field :sun_start %><br />
+      <%= f.label :sun_end %><br />
+      <%= f.number_field :sun_end %>
+    </div>
+
+</tr>
+</table>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
