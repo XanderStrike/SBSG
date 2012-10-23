@@ -11,63 +11,46 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :mon_start %><br />
-    <%= f.time_select :mon_start %>
-  </div>
-  <div class="field">
-    <%= f.label :mon_end %><br />
-    <%= f.time_select :mon_end %>
-  </div>
-  <div class="field">
-    <%= f.label :tue_start %><br />
-    <%= f.time_select :tue_start %>
-  </div>
-  <div class="field">
-    <%= f.label :tue_end %><br />
-    <%= f.time_select :tue_end %>
-  </div>
-  <div class="field">
-    <%= f.label :wed_start %><br />
-    <%= f.time_select :wed_start %>
-  </div>
-  <div class="field">
-    <%= f.label :wed_end %><br />
-    <%= f.time_select :wed_end %>
-  </div>
-  <div class="field">
-    <%= f.label :thu_start %><br />
-    <%= f.time_select :thu_start %>
-  </div>
-  <div class="field">
-    <%= f.label :thu_end %><br />
-    <%= f.time_select :thu_end %>
-  </div>
-  <div class="field">
-    <%= f.label :fri_start %><br />
-    <%= f.time_select :fri_start %>
-  </div>
-  <div class="field">
-    <%= f.label :fri_end %><br />
-    <%= f.time_select :fri_end %>
-  </div>
-  <div class="field">
-    <%= f.label :sat_start %><br />
-    <%= f.time_select :sat_start %>
-  </div>
-  <div class="field">
-    <%= f.label :sat_end %><br />
-    <%= f.time_select :sat_end %>
-  </div>
-  <div class="field">
-    <%= f.label :sun_start %><br />
-    <%= f.time_select :sun_start %>
-  </div>
-  <div class="field">
-    <%= f.label :sun_end %><br />
-    <%= f.time_select :sun_end %>
-  </div>
+<table >
+  <tr>
+    <th></th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+    <th>Sunday</th>
+  </tr>
+
+  <tr>
+    <th>Start</th>
+    <td><%= f.time_select :mon_start %></td>
+    <td><%= f.time_select :tue_start %></td>
+    <td><%= f.time_select :wed_start %></td>
+    <td><%= f.time_select :thu_start %></td>
+    <td><%= f.time_select :fri_start %></td>
+    <td><%= f.time_select :sat_start %></td>
+    <td><%= f.time_select :sun_start %></td>
+  </tr>
+
+  <tr>
+    <th>End</th>
+    <td><%= f.time_select :mon_end %></td>
+    <td><%= f.time_select :tue_end %></td>
+    <td><%= f.time_select :wed_end %></td>
+    <td><%= f.time_select :thu_end %></td>
+    <td><%= f.time_select :fri_end %></td>
+    <td><%= f.time_select :sat_end %></td>
+    <td><%= f.time_select :sun_end %></td>
+  </tr>
+</table>
+
+<br><br>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
