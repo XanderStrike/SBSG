@@ -68,12 +68,44 @@ div {
   }
 }
 
-table
-{
-border-collapse:collapse;
-}
-table,th, td
-{
-border: 1px solid black;
+
+
+
+
+table {
+  border-collapse:collapse;
 }
 
+table,th, td {
+  padding: 4px;
+  border: 1px solid black;
+}
+
+.time_selects select {
+   background: transparent;
+   width: 45px;
+   padding: 2px;
+   font-size: 14px;
+   border: 0px solid #ccc;
+   height: 25px;
+}
+
+.field input {
+  border: 1px solid;
+  width: 300px;
+  padding: 5px;
+  font-size: 16px;
+  height: 20px;
+}
+
+.actions input {
+  background: transparent;
+  border: 1px solid;
+  padding: 3px;
+  font-size: 12px;
+}
+
+.actions input:hover {
+  color: white;
+  background: black;
+}
