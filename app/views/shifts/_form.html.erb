@@ -1,0 +1,73 @@
+<%= form_for(@shift) do |f| %>
+  <% if @shift.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
+
+      <ul>
+      <% @shift.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :mon_start %><br />
+    <%= f.time_select :mon_start %>
+  </div>
+  <div class="field">
+    <%= f.label :mon_end %><br />
+    <%= f.time_select :mon_end %>
+  </div>
+  <div class="field">
+    <%= f.label :tue_start %><br />
+    <%= f.time_select :tue_start %>
+  </div>
+  <div class="field">
+    <%= f.label :tue_end %><br />
+    <%= f.time_select :tue_end %>
+  </div>
+  <div class="field">
+    <%= f.label :wed_start %><br />
+    <%= f.time_select :wed_start %>
+  </div>
+  <div class="field">
+    <%= f.label :wed_end %><br />
+    <%= f.time_select :wed_end %>
+  </div>
+  <div class="field">
+    <%= f.label :thu_start %><br />
+    <%= f.time_select :thu_start %>
+  </div>
+  <div class="field">
+    <%= f.label :thu_end %><br />
+    <%= f.time_select :thu_end %>
+  </div>
+  <div class="field">
+    <%= f.label :fri_start %><br />
+    <%= f.time_select :fri_start %>
+  </div>
+  <div class="field">
+    <%= f.label :fri_end %><br />
+    <%= f.time_select :fri_end %>
+  </div>
+  <div class="field">
+    <%= f.label :sat_start %><br />
+    <%= f.time_select :sat_start %>
+  </div>
+  <div class="field">
+    <%= f.label :sat_end %><br />
+    <%= f.time_select :sat_end %>
+  </div>
+  <div class="field">
+    <%= f.label :sun_start %><br />
+    <%= f.time_select :sun_start %>
+  </div>
+  <div class="field">
+    <%= f.label :sun_end %><br />
+    <%= f.time_select :sun_end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
