@@ -1,0 +1,61 @@
+<%= form_for(@employee) do |f| %>
+  <% if @employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+
+      <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <table >
+    <tr>
+      <th></th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+
+    <tr>
+      <th>Start</th>
+      <td><%= f.time_select :mon_start %></td>
+      <td><%= f.time_select :tue_start %></td>
+      <td><%= f.time_select :wed_start %></td>
+      <td><%= f.time_select :thu_start %></td>
+      <td><%= f.time_select :fri_start %></td>
+      <td><%= f.time_select :sat_start %></td>
+      <td><%= f.time_select :sun_start %></td>
+    </tr>
+
+    <tr>
+      <th>End</th>
+      <td><%= f.time_select :mon_end %></td>
+      <td><%= f.time_select :tue_end %></td>
+      <td><%= f.time_select :wed_end %></td>
+      <td><%= f.time_select :thu_end %></td>
+      <td><%= f.time_select :fri_end %></td>
+      <td><%= f.time_select :sat_end %></td>
+      <td><%= f.time_select :sun_end %></td>
+    </tr>
+  </table>
+
+  <div class="field">
+    <%= f.label :days_off %><br />
+    <%= f.text_field :days_off %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

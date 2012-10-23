@@ -1,3 +1,3 @@
 class Business < ActiveRecord::Base
-  attr_accessible :mon_start, :name
+  attr_accessible :name
 end

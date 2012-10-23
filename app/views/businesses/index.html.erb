@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Mon start</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,7 +11,6 @@
 <% @businesses.each do |business| %>
   <tr>
     <td><%= business.name %></td>
-    <td><%= business.mon_start %></td>
     <td><%= link_to 'Show', business %></td>
     <td><%= link_to 'Edit', edit_business_path(business) %></td>
     <td><%= link_to 'Destroy', business, method: :delete, data: { confirm: 'Are you sure?' } %></td>

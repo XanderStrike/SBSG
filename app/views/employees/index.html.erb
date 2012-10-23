@@ -1,0 +1,39 @@
+<h1>Listing employees</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+    <th>Sunday</th>
+    <th>Days off</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @employees.each do |employee| %>
+  <tr>
+    <td><%= employee.name %></td>
+    <td><%= employee.mon_start.strftime("%I:%M%p") %> - <%= employee.mon_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.tue_start.strftime("%I:%M%p") %> - <%= employee.tue_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.wed_start.strftime("%I:%M%p") %> - <%= employee.wed_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.thu_start.strftime("%I:%M%p") %> - <%= employee.thu_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.fri_start.strftime("%I:%M%p") %> - <%= employee.fri_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.sat_start.strftime("%I:%M%p") %> - <%= employee.sat_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.sun_start.strftime("%I:%M%p") %> - <%= employee.sun_end.strftime("%I:%M%p") %></td>
+    <td><%= employee.days_off %></td>
+    <td><%= link_to 'Show', employee %></td>
+    <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+    <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Employee', new_employee_path %>
