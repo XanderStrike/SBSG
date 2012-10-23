@@ -1,8 +1,6 @@
 SBSG::Application.routes.draw do
   resources :shifts
 
-  resources :employees
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
