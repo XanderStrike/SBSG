@@ -1,0 +1,10 @@
+<table>
+<% schedule = @schedule.schedule %>
+  <% schedule.split(%r{;\s*}).each do |line| %>
+  	<tr>
+	  <% line.split(%r{,\s*}).each do |cell| %>
+	  	<td><%= cell %></td>
+	  <% end %>
+  	</tr>
+  <% end %>
+</table>
