@@ -1,5 +1,35 @@
-<h1>New business</h1>
+<% provide(:title, "Sign Up") %>
+<h2>Create New Account</h2>
 
-<%= render 'form' %>
+<div>
+  <div>
+    <%= form_for @business do |f| %>
+      <%= render 'error_messages', object: f.object %>
+      
+      <div>
+        <%= f.label :name, "Business Name" %>
+        <%= f.text_field :name %>
+      </div>
 
-<%= link_to 'Back', businesses_path %>
+      <div>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+      </div>
+
+      <div>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </div>
+
+      <div>
+        <%= f.label :password_confirmation, "Password Confirmation" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+
+      <br/><br/>
+
+      <%= f.submit "Create Account" %>
+      <br/>
+    <% end %>
+  </div>
+</div>
