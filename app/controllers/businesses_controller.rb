@@ -8,7 +8,7 @@ class BusinessesController < ApplicationController
     if @business.save
       sign_in @business
       flash[:success] = "Welcome to Stargate"
-      redirect_to 'shifts'
+      redirect_to '/shifts'
     else
       render 'new'
     end
