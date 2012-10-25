@@ -1,4 +1,6 @@
 SBSG::Application.routes.draw do
+  resources :schedules
+
   resources :businesses
   resources :shifts
   resources :employees
