@@ -1,0 +1,17 @@
+<h1><%= current_user.name %>: Dashboard</h1>
+
+<div>
+	<h2>Current Schedule:</h2>
+	<% @schedule = @schedules.last %>
+	<%= render 'schedules/table' %>
+</div>
+
+<div>
+	<h2>Shifts:</h2>
+	<%= @shifts.to_s %>
+</div>
+
+<div>
+	<h2>Employees:</h2>
+	<%= @employees.to_s %>
+</div>

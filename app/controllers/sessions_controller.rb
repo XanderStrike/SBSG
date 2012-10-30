@@ -1,14 +1,14 @@
 class SessionsController < ApplicationController
 
   def new
-    redirect_back_or '/shifts' if signed_in?
+    redirect_back_or '/dashboard' if signed_in?
   end
 
   def create
     user = Business.find_by_email(params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       sign_in user
-      redirect_back_or '/shifts'
+      redirect_back_or '/dashboard'
     else
       flash.now[:error] = "Invalid email/password combination"
       render 'new'

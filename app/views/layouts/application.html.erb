@@ -7,21 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div>
-    <div>
-
-    </div>
-    <div>
+    <div class="header">
       <span><a href= <%= employees_path %> >Employees</a></span>
       <span><a href= <%= shifts_path %> >Shifts</a></span>
       <% if signed_in? %>
         <span><%= link_to "Logout", signout_path, method: 'delete' %></a></span>
       <% end %>
-<% flash.each do |key, value| %>
-  <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-<% end %>
+      <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% end %>
+    </div>
 
-<%= yield %>
+<div class="body">
+
+  <%= yield %>
+  
+</div>
 
 </body>
 </html>
