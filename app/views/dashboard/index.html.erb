@@ -2,16 +2,24 @@
 
 <div>
 	<h2>Current Schedule:</h2>
-	<% @schedule = @schedules.last %>
-	<%= render 'schedules/table' %>
+	<% if @schedules.empty? %>
+		<h3>Oops! You don't have any schedules yet!</h3>
+	<% else %>
+		<% @schedule = @schedules.last %>
+		<%= render 'schedules/table' %>
+	<% end %>
 </div>
 
 <div>
 	<h2>Shifts:</h2>
-	<%= @shifts.to_s %>
+	<% @shifts.each do |shift| %>
+		<%= shift %> <br>
+	<% end %>
 </div>
 
 <div>
 	<h2>Employees:</h2>
-	<%= @employees.to_s %>
+	<% @employees.each do |emp| %>
+		<%= emp.name %> <br>
+	<% end %>
 </div>

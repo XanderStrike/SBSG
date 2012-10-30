@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
   # GET /employees
   # GET /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.find_all_by_business_id(current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb

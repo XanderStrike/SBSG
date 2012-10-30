@@ -2,7 +2,7 @@ class SchedulesController < ApplicationController
   # GET /schedules
   # GET /schedules.json
   def index
-    @schedules = Schedule.all
+    @schedules = Schedule.find_all_by_business_id(current_user.id)
     @schedule = ""
 
     respond_to do |format|

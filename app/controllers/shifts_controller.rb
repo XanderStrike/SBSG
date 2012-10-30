@@ -4,7 +4,7 @@ class ShiftsController < ApplicationController
   # GET /shifts
   # GET /shifts.json
   def index
-    @shifts = Shift.all
+    @shifts = Shift.find_all_by_business_id(current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
