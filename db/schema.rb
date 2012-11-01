@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030022045) do
+ActiveRecord::Schema.define(:version => 20121101042523) do
+
+  create_table "availabilities", :force => true do |t|
+    t.integer  "employee_id"
+    t.time     "start"
+    t.time     "end"
+    t.integer  "day"
+    t.integer  "business_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -23,24 +33,10 @@ ActiveRecord::Schema.define(:version => 20121030022045) do
 
   create_table "employees", :force => true do |t|
     t.string   "name"
-    t.time     "mon_start"
-    t.time     "mon_end"
-    t.time     "tue_start"
-    t.time     "tue_end"
-    t.time     "wed_start"
-    t.time     "wed_end"
-    t.time     "thu_start"
-    t.time     "thu_end"
-    t.time     "fri_start"
-    t.time     "fri_end"
-    t.time     "sat_start"
-    t.time     "sat_end"
-    t.time     "sun_start"
-    t.time     "sun_end"
-    t.string   "days_off"
+    t.string   "email"
+    t.integer  "business_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "business_id"
   end
 
   create_table "schedules", :force => true do |t|
@@ -50,24 +46,18 @@ ActiveRecord::Schema.define(:version => 20121030022045) do
     t.integer  "business_id"
   end
 
+  create_table "sessions", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "shifts", :force => true do |t|
-    t.time     "mon_start"
-    t.time     "mon_end"
-    t.time     "tue_start"
-    t.time     "tue_end"
-    t.time     "wed_start"
-    t.time     "wed_end"
-    t.time     "thu_start"
-    t.time     "thu_end"
-    t.time     "fri_start"
-    t.time     "fri_end"
-    t.time     "sat_start"
-    t.time     "sat_end"
-    t.time     "sun_start"
-    t.time     "sun_end"
+    t.integer  "business_id"
+    t.time     "start"
+    t.time     "end"
+    t.integer  "day"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "business_id"
   end
 
 end
