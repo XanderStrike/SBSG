@@ -11,42 +11,11 @@
     </div>
   <% end %>
 
-<div class="time_selects">
-<table >
-  <tr>
-    <th></th>
-    <th>Monday</th>
-    <th>Tuesday</th>
-    <th>Wednesday</th>
-    <th>Thursday</th>
-    <th>Friday</th>
-    <th>Saturday</th>
-    <th>Sunday</th>
-  </tr>
 
-  <tr>
-    <th>Start</th>
-    <td><%= f.time_select :mon_start %></td>
-    <td><%= f.time_select :tue_start %></td>
-    <td><%= f.time_select :wed_start %></td>
-    <td><%= f.time_select :thu_start %></td>
-    <td><%= f.time_select :fri_start %></td>
-    <td><%= f.time_select :sat_start %></td>
-    <td><%= f.time_select :sun_start %></td>
-  </tr>
+<li><%= f.number_field :day %></li>
+<li><%= f.time_select :start %></li>
+<li><%= f.time_select :end %></li>
 
-  <tr>
-    <th>End</th>
-    <td><%= f.time_select :mon_end %></td>
-    <td><%= f.time_select :tue_end %></td>
-    <td><%= f.time_select :wed_end %></td>
-    <td><%= f.time_select :thu_end %></td>
-    <td><%= f.time_select :fri_end %></td>
-    <td><%= f.time_select :sat_end %></td>
-    <td><%= f.time_select :sun_end %></td>
-  </tr>
-</table>
-</div>
 
 <%= f.hidden_field :business_id, :value => current_user.id %>
 

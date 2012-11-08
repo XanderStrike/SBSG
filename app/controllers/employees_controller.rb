@@ -99,6 +99,11 @@ puts "availabilities: #{availabilities.inspect}"
     @employee = Employee.find(params[:id])
     @employee.destroy
 
+    @availabilities = Availability.find_all_by_employee_id(params[:id])
+    @availabilities.each do |a|
+      a.destroy
+    end
+
     respond_to do |format|
       format.html { redirect_to employees_url }
       format.json { head :no_content }

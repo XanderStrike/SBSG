@@ -1,27 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<table >
-  <tr>
-    <th>Monday</th>
-    <th>Tuesday</th>
-    <th>Wednesday</th>
-    <th>Thursday</th>
-    <th>Friday</th>
-    <th>Saturday</th>
-    <th>Sunday</th>
-  </tr>
-
-  <tr>
-    <td><%= @shift.mon_start.strftime("%I:%M%p") %> - <%= @shift.mon_end.strftime("%I:%M%p") %></td>
-    <td><%= @shift.tue_start.strftime("%I:%M%p") %> - <%= @shift.tue_end.strftime("%I:%M%p") %></td>
-    <td><%= @shift.wed_start.strftime("%I:%M%p") %> - <%= @shift.wed_end.strftime("%I:%M%p") %></td>
-    <td><%= @shift.thu_start.strftime("%I:%M%p") %> - <%= @shift.thu_end.strftime("%I:%M%p") %></td>
-    <td><%= @shift.fri_start.strftime("%I:%M%p") %> - <%= @shift.fri_end.strftime("%I:%M%p") %></td>
-    <td><%= @shift.sat_start.strftime("%I:%M%p") %> - <%= @shift.sat_end.strftime("%I:%M%p") %></td>
-    <td><%= @shift.sun_start.strftime("%I:%M%p") %> - <%= @shift.sun_end.strftime("%I:%M%p") %></td>
-  </tr>
-</table>
-
 
 <%= link_to 'Edit', edit_shift_path(@shift) %> |
 <%= link_to 'Done', shifts_path %>
