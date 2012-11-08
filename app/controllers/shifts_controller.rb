@@ -4,7 +4,17 @@ class ShiftsController < ApplicationController
   # GET /shifts
   # GET /shifts.json
   def index
-    @shifts = Shift.find_all_by_business_id(current_user.id)
+    @shifts_old = Shift.find_all_by_business_id(current_user.id)
+
+    @shifts = []
+    @count = []
+
+    7.times do |day|
+      @shifts[day] = Shift.where(business_id: current_user.id, day: day)
+      @count[day] = @shifts[day].count
+    end
+
+    @count = @count.max
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,12 +25,8 @@ class ShiftsController < ApplicationController
   # GET /shifts/1
   # GET /shifts/1.json
   def show
-    @shift = Shift.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @shift }
-    end
+    redirect_to(shifts_url)
   end
 
   # GET /shifts/new
