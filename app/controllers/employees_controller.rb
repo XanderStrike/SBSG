@@ -43,11 +43,22 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(params[:employee])
+    @employee.business_id = current_user.id
 
     respond_to do |format|
       if @employee.save
-        format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
-        format.json { render json: @employee, status: :created, location: @employee }
+        7.times do |index|
+          availability = Availability.new(params[:availability][index.to_s])
+          puts "params[:availability][#{index}]: #{params[:availability][index.to_s]}"
+          availability.employee_id = @employee.id
+          availability.day = index
+          availability.business_id = current_user.id
+
+          availability.save
+        end
+
+        format.html { redirect_to employees_path, notice: 'Employee was successfully created.' }
+        format.json { render json: employees_path, status: :created, location: @employee }
       else
         format.html { render action: "new" }
         format.json { render json: @employee.errors, status: :unprocessable_entity }
@@ -62,7 +73,18 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+        availabilities = Availability.find_all_by_employee_id(@employee.id, order: 'day')
+puts "availabilities: #{availabilities.inspect}"
+        7.times do |index|
+          availability = availabilities[index]
+          availability.update_attributes(params[:availability][index.to_s])
+#          availability.day = index
+#          availability.business_id = current_user.id
+
+          availability.save
+        end
+
+        format.html { redirect_to employees_path, notice: 'Employee was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

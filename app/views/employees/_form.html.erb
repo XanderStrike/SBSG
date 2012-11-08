@@ -16,6 +16,11 @@
     <%= f.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+
   <h3>Availability</h3>
   <div class="time_selects">
     <table >
@@ -32,31 +37,28 @@
 
       <tr>
         <th>Start</th>
-        <td><%= f.time_select :mon_start %></td>
-        <td><%= f.time_select :tue_start %></td>
-        <td><%= f.time_select :wed_start %></td>
-        <td><%= f.time_select :thu_start %></td>
-        <td><%= f.time_select :fri_start %></td>
-        <td><%= f.time_select :sat_start %></td>
-        <td><%= f.time_select :sun_start %></td>
+        <td><%= time_select "availability[0]", "start", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[1]", "start", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[2]", "start", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[3]", "start", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[4]", "start", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[5]", "start", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[6]", "start", {minute_step: 15, ampm: true} %></td>
       </tr>
 
       <tr>
         <th>End</th>
-        <td><%= f.time_select :mon_end %></td>
-        <td><%= f.time_select :tue_end %></td>
-        <td><%= f.time_select :wed_end %></td>
-        <td><%= f.time_select :thu_end %></td>
-        <td><%= f.time_select :fri_end %></td>
-        <td><%= f.time_select :sat_end %></td>
-        <td><%= f.time_select :sun_end %></td>
+        <td><%= time_select "availability[0]", "end", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[1]", "end", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[2]", "end", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[3]", "end", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[4]", "end", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[5]", "end", {minute_step: 15, ampm: true} %></td>
+        <td><%= time_select "availability[6]", "end", {minute_step: 15, ampm: true} %></td>
       </tr>
     </table>
   </div>
 
-  <%= f.hidden_field :business_id, :value => current_user.id %>
-  
-  
   <div class="actions">
     <%= f.submit %>
   </div>
