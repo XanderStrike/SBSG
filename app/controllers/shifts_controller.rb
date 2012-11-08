@@ -43,6 +43,8 @@ class ShiftsController < ApplicationController
   # POST /shifts.json
   def create
     @shift = Shift.new(params[:shift])
+    @shift.business_id = current_user.id
+    @shift.day = params[:day]
 
     respond_to do |format|
       if @shift.save
@@ -62,6 +64,8 @@ class ShiftsController < ApplicationController
 
     respond_to do |format|
       if @shift.update_attributes(params[:shift])
+        @shift.day = params[:day]
+
         format.html { redirect_to @shift, notice: 'Shift was successfully updated.' }
         format.json { head :no_content }
       else
