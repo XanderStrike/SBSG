@@ -89,20 +89,29 @@ class SchedulesController < ApplicationController
     @shifts = Shift.find_all_by_business_id(current_user.id)
     @employees = Employee.find_all_by_business_id(current_user.id)
 
-    output = ",Monday;"
+    output_emp = {}
 
     day = 0
     @emps = @employees.shuffle
     Shift.where(day: day, business_id: current_user.id).each do |s|
       @emps.each do |e|
+        if output_emp[e.name].nil?
+          output_emp[e.name] = "#{e.name}" 
+        end
         ava = Availability.where(day: 0, employee_id: e.id)
         if ava.first.contains?(s)
-          output += "#{e.name}, #{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")};"
+          output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
           @emps.delete(e)
           break
         end
       end
     end
+
+    output = ",Monday,Tuesday,Wednesday,Thursday,Friday;"
+    output_emp.keys.each do |name|
+      output += "#{output_emp[name]};"
+    end
+
 
     @schedule.schedule = output
     @schedule.business_id = current_user.id
