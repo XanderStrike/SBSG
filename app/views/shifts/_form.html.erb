@@ -12,13 +12,25 @@
   <% end %>
 
 
-<li><%= f.number_field :day %></li>
-<li><%= f.time_select :start %></li>
-<li><%= f.time_select :end %></li>
-
-
-<%= f.hidden_field :business_id, :value => current_user.id %>
-
+  <div class="field">
+    <label for="shift_day">Day</label>
+    <select name="day">
+      <% 7.times do |day| %>
+        <option value=<%= day %>><%= human_readable_day(day) %></option>
+      <% end %>
+    </select>
+  </div>
+  
+  <div class="field">
+    <%= f.label :start %><br>
+    <%= f.time_select :start, { ampm: true, minute_step: 15, default: (@shift.start || Time.now.midnight)} %>
+  </div>
+  
+  <div>
+    <%= f.label :end %><br>
+    <%= f.time_select :end, { ampm: true, minute_step: 15, default: (@shift.start || Time.now.midnight)} %>
+  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>
