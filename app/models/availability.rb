@@ -15,7 +15,7 @@ class Availability < ActiveRecord::Base
   	if time1.hour < time2.hour
   	  true
   	elsif time1.hour == time2.hour
-  	  if time1.min < time2.min
+  	  if time1.min <= time2.min
   	  	true
   	  else
   	  	false
