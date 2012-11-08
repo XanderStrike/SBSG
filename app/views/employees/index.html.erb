@@ -17,11 +17,10 @@
 
 <% @employees.each do |employee| %>
   <% @availability = Availability.find_all_by_employee_id(employee.id) %>
-  <% puts "@availability.inspect: #{@availability.inspect}" %>
   <tr>
     <td><%= employee.name %></td>
     <% 7.times do |day| %>
-      <% if @availability && @availability[day] && @availability[day].start %>
+      <% if @availability[day].start && @availability[day].available? %>
         <td><%= @availability[day].start.strftime("%I:%M%p") %> - <%= @availability[day].end.strftime("%I:%M%p") %></td>
       <% else %>
         <td>Off</td>
