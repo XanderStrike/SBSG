@@ -99,8 +99,7 @@ class SchedulesController < ApplicationController
           if output_emp[e.name].nil?
             output_emp[e.name] = "#{e.name}" 
           end
-          ava = Availability.where(day: day, employee_id: e.id)
-          if ava.first.contains?(s)
+          if e.can_work?(s)
             output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
             @emps.delete(e)
             break
