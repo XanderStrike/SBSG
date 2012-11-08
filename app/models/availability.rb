@@ -3,8 +3,8 @@ class Availability < ActiveRecord::Base
 
   # will determine if a shift is contained within the given availability
   def contains?(shift)
-  	if (before?(self.start.hour, shift.start.hour) &&
-  		before?(shift.end.hour, self.end.hour))
+  	if (before?(self.start, shift.start) &&
+  		before?(shift.end, self.end))
   	  true
   	else
   	  false
