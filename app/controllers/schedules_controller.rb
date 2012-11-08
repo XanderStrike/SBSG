@@ -81,4 +81,51 @@ class SchedulesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # GET /schedules/generate
+  def generate
+    @schedule = Schedule.new
+
+    @shifts = Shift.find_all_by_business_id(current_user.id)
+    @employees = Employee.find_all_by_business_id(current_user.id)
+
+    output_emp = {}
+
+    days = [0,1,2,3,4,5,6]
+    days.each do |day|
+      @emps = @employees.shuffle
+      Shift.where(day: day, business_id: current_user.id).each do |s|
+        @emps.each do |e|
+          if output_emp[e.name].nil?
+            output_emp[e.name] = "#{e.name}" 
+          end
+          ava = Availability.where(day: day, employee_id: e.id)
+          if ava.first.contains?(s)
+            output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
+            @emps.delete(e)
+            break
+          end
+          # if there are no more employees, no one can take this shift so throw an error here
+        end
+      end
+      @emps.each do |e|
+        if output_emp[e.name].nil?
+          output_emp[e.name] = "#{e.name}" 
+        end
+        output_emp[e.name] += ",OFF"
+      end
+    end
+
+    output = ",Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday;"
+    output_emp.keys.each do |name|
+      output += "#{output_emp[name]};"
+    end
+
+
+    @schedule.schedule = output
+    @schedule.business_id = current_user.id
+    @schedule.save
+
+  end
+
 end

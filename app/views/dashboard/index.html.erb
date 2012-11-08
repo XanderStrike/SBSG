@@ -8,6 +8,7 @@
 		<% @schedule = @schedules.last %>
 		<%= render 'schedules/table' %>
 	<% end %>
+	<a href="/schedules/generate">Generate New Schedule</a>
 </div>
 
 <div>
@@ -19,7 +20,9 @@
 
 <div>
 	<h2>Employees:</h2>
-	<% @employees.each do |emp| %>
-		<%= emp.name %> <br>
-	<% end %>
+	<table>
+		<% @employees.each do |emp| %>
+			<tr><td><%= emp.name %></td><td><%= link_to 'Edit', edit_employee_path(emp) %></td></tr>
+		<% end %>
+	</table>
 </div>
