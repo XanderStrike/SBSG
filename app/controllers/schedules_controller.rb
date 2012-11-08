@@ -11,28 +11,6 @@ class SchedulesController < ApplicationController
     end
   end
 
-  # GET /schedules/1
-  # GET /schedules/1.json
-  def show
-    @schedule = Schedule.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @schedule }
-    end
-  end
-
-  # GET /schedules/new
-  # GET /schedules/new.json
-  def new
-    @schedule = Schedule.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @schedule }
-    end
-  end
-
   # GET /schedules/1/edit
   def edit
     @schedule = Schedule.find(params[:id])
@@ -82,7 +60,7 @@ class SchedulesController < ApplicationController
     end
   end
 
-  # GET /schedules/generate
+  
 
   # Problems with algorithm:
   #   -if there's no employee who can take a shift, it fails silently and the shift doesn't show up
@@ -91,18 +69,17 @@ class SchedulesController < ApplicationController
   #       the closing shift and nobody will be able to open
   #   -employees are sometimes assigned seven days in a row, or 40+ hours per week
   #   -
-
+  # GET /schedules/generate
   def generate
-    @schedule = Schedule.new
-
-    @shifts = Shift.find_all_by_business_id(current_user.id)
     @employees = Employee.find_all_by_business_id(current_user.id)
 
+    # initialize output hash
     output_emp = {}
     @employees.each do |e|
       output_emp[e.name] = "#{e.name}" 
     end
 
+    # generate schedule
     7.times do |day|
       @emps = @employees.shuffle
       Shift.where(day: day, business_id: current_user.id).each do |s|
@@ -119,12 +96,14 @@ class SchedulesController < ApplicationController
       end
     end
 
+    # csvify hash for schedule
     output = ",Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday;"
     output_emp.keys.sort.each do |name|
       output += "#{output_emp[name]};"
     end
 
-
+    # save the new schedule
+    @schedule = Schedule.new
     @schedule.schedule = output
     @schedule.business_id = current_user.id
     @schedule.save

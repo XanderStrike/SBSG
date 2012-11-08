@@ -12,17 +12,16 @@
 </div>
 
 <div>
-	<h2>Shifts:</h2>
-	<% @shifts.each do |shift| %>
-		<%= shift %> <br>
-	<% end %>
-</div>
-
-<div>
 	<h2>Employees:</h2>
 	<table>
 		<% @employees.each do |emp| %>
 			<tr><td><%= emp.name %></td><td><%= link_to 'Edit', edit_employee_path(emp) %></td></tr>
 		<% end %>
 	</table>
+</div>
+
+
+<div>
+	<h2>Shifts:</h2>
+	<%= @shifts.count %>
 </div>
