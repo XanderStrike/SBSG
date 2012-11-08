@@ -83,6 +83,15 @@ class SchedulesController < ApplicationController
   end
 
   # GET /schedules/generate
+
+  # Problems with algorithm:
+  #   -if there's no employee who can take a shift, it fails silently and the shift doesn't show up
+  #   -employees are assigned randomly, instead of intelligently
+  #     i.e. if employee A has open availability and B can only close, A will sometimes be assigned
+  #       the closing shift and nobody will be able to open
+  #   -employees are sometimes assigned seven days in a row, or 40+ hours per week
+  #   -
+
   def generate
     @schedule = Schedule.new
 
@@ -90,33 +99,28 @@ class SchedulesController < ApplicationController
     @employees = Employee.find_all_by_business_id(current_user.id)
 
     output_emp = {}
+    @employees.each do |e|
+      output_emp[e.name] = "#{e.name}" 
+    end
 
-    days = [0,1,2,3,4,5,6]
-    days.each do |day|
+    7.times do |day|
       @emps = @employees.shuffle
       Shift.where(day: day, business_id: current_user.id).each do |s|
         @emps.each do |e|
-          if output_emp[e.name].nil?
-            output_emp[e.name] = "#{e.name}" 
-          end
           if e.can_work?(s)
             output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
             @emps.delete(e)
             break
           end
-          # if there are no more employees, no one can take this shift so throw an error here
         end
       end
       @emps.each do |e|
-        if output_emp[e.name].nil?
-          output_emp[e.name] = "#{e.name}" 
-        end
         output_emp[e.name] += ",OFF"
       end
     end
 
     output = ",Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday;"
-    output_emp.keys.each do |name|
+    output_emp.keys.sort.each do |name|
       output += "#{output_emp[name]};"
     end
 
