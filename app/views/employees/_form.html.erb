@@ -37,24 +37,22 @@
 
       <tr>
         <th>Start</th>
-        <td><%= time_select "availability[0]", "start", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[1]", "start", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[2]", "start", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[3]", "start", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[4]", "start", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[5]", "start", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[6]", "start", {minute_step: 15, ampm: true} %></td>
+        <% 7.times do |day| %>
+          <% availability = Availability.find_by_employee_id_and_day(@employee.id, day) %>
+          <% start_time = availability.present? ? availability.start : Time.now.midnight %>
+
+          <td><%= time_select "availability[#{day.to_s}]", "start", {minute_step: 15, ampm: true, default: start_time} %></td>
+        <% end %>
       </tr>
 
       <tr>
         <th>End</th>
-        <td><%= time_select "availability[0]", "end", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[1]", "end", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[2]", "end", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[3]", "end", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[4]", "end", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[5]", "end", {minute_step: 15, ampm: true} %></td>
-        <td><%= time_select "availability[6]", "end", {minute_step: 15, ampm: true} %></td>
+        <% 7.times do |day| %>
+          <% availability = Availability.find_by_employee_id_and_day(@employee.id, day) %>
+          <% end_time = availability.present? ? availability.end : Time.now.midnight %>
+
+          <td><%= time_select "availability[#{day.to_s}]", "end", {minute_step: 15, ampm: true, default: end_time} %></td>
+        <% end %>
       </tr>
     </table>
   </div>
