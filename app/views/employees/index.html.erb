@@ -1,4 +1,5 @@
-<h1>Listing employees</h1>
+<h1>Employees</h1>
+<h4>Here you can edit, remove, and create your employees.</h4> 
 <center>
 <table>
   <tr>
@@ -26,7 +27,7 @@
       <% end %>
     <% end %>
     <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-    <td><%= link_to 'Delete', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Fire', employee, method: :delete, data: { confirm: 'Are you sure? :(' } %></td>
   </tr>
 <% end %>
 </table>

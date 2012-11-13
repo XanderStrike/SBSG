@@ -20,7 +20,7 @@
 		<a href= <%= shifts_path %> >Add/Edit</a>
 		<table>
 			<% @shifts.count.times do |x| %>
-				<% if x%3 == 0 %> <tr></tr> <% end %>
+				<% if x%4 == 0 %> <tr></tr> <% end %>
 				<td><%= @shifts[x].to_s %></td>
 			<% end %>
 			</tr>

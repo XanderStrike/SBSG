@@ -42,7 +42,7 @@ h1 {
 h2 {
   font-size: 1.7em;
   letter-spacing: -1px;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
@@ -51,12 +51,21 @@ h2 {
 
 h3 {
   font-size: 1.7em;
-  letter-spacing: -1px;
   margin-top: 20px;
   margin-bottom: 5px;
   text-align: center;
   font-weight: normal;
   color: #999;
+}
+
+h4 {
+  font-size: 1.4em;
+  letter-spacing: -1px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: normal;
+  color: #666;
 }
 
 p {
