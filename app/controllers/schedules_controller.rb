@@ -71,7 +71,6 @@ class SchedulesController < ApplicationController
   #       checking things
   # GET /schedules/generate
   def generate
-    @employees = Employee.find_all_by_business_id(current_user.id)
 
     @errors = []
 
@@ -120,6 +119,15 @@ class SchedulesController < ApplicationController
     @schedule.business_id = current_user.id
     @schedule.save
 
+  end
+
+  generate_schedule
+    @employees = Employee.find_all_by_business_id(current_user.id)
+    employee_availability = {}
+
+    @employees.each do |employee|
+      employee_availability[employee.id.to_s] = employee.shift_availability
+    end
   end
 
 end
