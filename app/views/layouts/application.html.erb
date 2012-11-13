@@ -7,25 +7,46 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <div class="header">
-      <% if signed_in? %>
-        <span><a href="/dashboard" >Dashboard</a></span>
-        <span><a href= <%= employees_path %> >Employees</a></span>
-        <span><a href= <%= shifts_path %> >Shifts</a></span>
-        <span><%= link_to "Logout", signout_path, method: 'delete' %></a></span>
-      <% end %>
+   <header class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "STARGATE", '#', id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">
+          <% if signed_in? %>
+            <li><a href="/dashboard" >Dashboard</a></li>
+            <li><a href= <%= employees_path %> >Employees</a></li>
+            <li><a href= <%= shifts_path %> >Shifts</a></li>
+            <li><%= link_to "Logout", signout_path, method: 'delete' %></li>
+          <% else %>
+            <li><a href="">Log In</a></li>
+          <% end %>
+        </ul>
+      </nav>
     </div>
+  </div>
+  </header>
 
-  <div class="body">
+  <div class="container">
 
     <%= yield %>
+
+    <footer class="footer">
+  <small>
+    @2012 SBSG. All rights reserved.
+  </small>
+  <nav>
+    <ul>
+      <li><%= link_to "About",   '#' %></li>
+      <li><%= link_to "Contact", '#' %></li>
+    </ul>
+  </nav>
+</footer>
     
   </div>
 
 
-<div class="footer">
-  <footer> @2012 SBSG. All rights reserved. </footer>
-</div>
+
 
 </body>
 </html>

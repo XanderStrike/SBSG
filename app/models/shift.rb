@@ -11,6 +11,6 @@ class Shift < ActiveRecord::Base
 
   def to_s
   	days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-  	"#{self.start.strftime("%I:%M%p")} - #{self.end.strftime("%I:%M%p")}, #{days[self.day]}"
+  	"#{days[self.day]}: #{self.start.strftime("%I:%M%p")}-#{self.end.strftime("%I:%M%p")}"
   end
 end

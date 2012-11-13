@@ -10,18 +10,12 @@
       </ul>
     </div>
   <% end %>
+  <h2>Contact Information</h2>
+  <center>
+      Name:<br><%= f.text_field :name %><br>
+      Email:<br><%= f.text_field :email %><br>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-
-  <h3>Availability</h3>
+  <h2>Availability</h2>
   <div class="time_selects">
     <table >
       <tr>
@@ -57,7 +51,7 @@
     </table>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <BR>
+    <%= f.submit 'Create', :class => "btn btn-success" %>
+  </center>
 <% end %>
