@@ -25,8 +25,6 @@ class ShiftsController < ApplicationController
   # GET /shifts/1
   # GET /shifts/1.json
   def show
-
-    redirect_to(shifts_url)
   end
 
   # GET /shifts/new
@@ -54,8 +52,8 @@ class ShiftsController < ApplicationController
 
     respond_to do |format|
       if @shift.save
-        format.html { redirect_to @shift, notice: 'Shift was successfully created.' }
-        format.json { render json: @shift, status: :created, location: @shift }
+        format.html { redirect_to shifts_path, notice: 'Shift was successfully created.' }
+        format.json { render json: shifts_path, status: :created, location: @shift }
       else
         format.html { render action: "new" }
         format.json { render json: @shift.errors, status: :unprocessable_entity }
@@ -72,7 +70,7 @@ class ShiftsController < ApplicationController
       if @shift.update_attributes(params[:shift])
         @shift.day = params[:day]
 
-        format.html { redirect_to @shift, notice: 'Shift was successfully updated.' }
+        format.html { redirect_to shifts_path, notice: 'Shift was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
