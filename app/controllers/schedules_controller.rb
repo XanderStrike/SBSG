@@ -63,37 +63,49 @@ class SchedulesController < ApplicationController
   
 
   # Problems with algorithm:
-  #   -if there's no employee who can take a shift, it fails silently and the shift doesn't show up
   #   -employees are assigned randomly, instead of intelligently
   #     i.e. if employee A has open availability and B can only close, A will sometimes be assigned
   #       the closing shift and nobody will be able to open
   #   -employees are sometimes assigned seven days in a row, or 40+ hours per week
-  #   -
+  #   -we probably will want to hold the data temporarily in some better form than a string for
+  #       checking things
   # GET /schedules/generate
   def generate
     @employees = Employee.find_all_by_business_id(current_user.id)
 
+    @errors = []
+
     # initialize output hash
-    output_emp = {}
-    @employees.each do |e|
-      output_emp[e.name] = "#{e.name}" 
-    end
+    output_emp, length = {}, {}
 
     # generate schedule
-    7.times do |day|
-      @emps = @employees.shuffle
-      Shift.where(day: day, business_id: current_user.id).each do |s|
-        @emps.each do |e|
-          if e.can_work?(s)
-            output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
-            @emps.delete(e)
-            break
+    5.times do |x|
+      @errors = []
+      @employees.each do |e|
+        output_emp[e.name] = "#{e.name}"
+        length["#{e.name}"] = 0
+      end
+
+      7.times do |day|
+        @emps = @employees.shuffle
+        Shift.where(day: day, business_id: current_user.id).each do |s|
+          assigned = false
+          @emps.each do |e|
+            if e.can_work?(s) && (length[e.name] + s.length) <= 40
+              output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
+              length[e.name] += s.length
+              @emps.delete(e)
+              assigned = true
+              break
+            end
           end
+          @errors += ["Shift #{s.to_s} couldn't be assigned!"] unless assigned
+        end
+        @emps.each do |e|
+          output_emp[e.name] += ",OFF"
         end
       end
-      @emps.each do |e|
-        output_emp[e.name] += ",OFF"
-      end
+      break if @errors.empty?
     end
 
     # csvify hash for schedule
