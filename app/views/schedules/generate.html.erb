@@ -2,4 +2,8 @@
 
 <%= render 'table' %>
 
-<% @errors.each do |e| %><font color="red"><%= e %></font><br><% end %>
+<br><br>
+<div id="errors">
+	<%= "Oops! This generation has generated errors!" unless @errors.empty? %><br>
+	<% @errors.each do |e| %><font color="red"><%= e %></font><br><% end %>
+</div>
