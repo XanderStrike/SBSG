@@ -16,9 +16,9 @@
       <% 7.times do |day| %>
         <td>
           <% unless @shifts[day][n].nil? %>
-            <%= "#{@shifts[day][n].start.strftime("%I:%M%p")} - #{@shifts[day][n].end.strftime("%I:%M%p")}" %>
-            <%= link_to 'e', edit_shift_path(@shifts[day][n]) %>
-            <%= link_to 'd', @shifts[day][n], method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= "#{@shifts[day][n].start.strftime("%I:%M%p")} - #{@shifts[day][n].end.strftime("%I:%M%p")}" %><br>
+            <%= link_to 'Edit', edit_shift_path(@shifts[day][n]) %>
+            <%= link_to 'Delete', @shifts[day][n], method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %>
         </td>
       <% end %>        
