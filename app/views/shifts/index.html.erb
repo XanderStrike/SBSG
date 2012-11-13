@@ -2,23 +2,29 @@
 
 <table>
   <tr>
-    <th>Day</th>
-    <th>Start</th>
-    <th>End</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+    <th>Sunday</th>
   </tr>
 
-<% @shifts.each do |shift| %>
-  <tr>
-    <td><%= human_readable_day(shift.day) %></td>
-    <td><%= shift.start.strftime("%I:%M%p") %></td>
-    <td><%= shift.end.strftime("%I:%M%p") %></td>
-    <td><%= link_to 'Edit', edit_shift_path(shift) %></td>
-    <td><%= link_to 'Delete', shift, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @count.times do |n| %>
+    <tr>
+      <% 7.times do |day| %>
+        <td>
+          <% unless @shifts[day][n].nil? %>
+            <%= "#{@shifts[day][n].start.strftime("%I:%M%p")} - #{@shifts[day][n].end.strftime("%I:%M%p")}" %>
+            <%= link_to 'e', edit_shift_path(@shifts[day][n]) %>
+            <%= link_to 'd', @shifts[day][n], method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+      <% end %>        
+    </tr>
+  <% end %>
+
 </table>
 
 <br />
