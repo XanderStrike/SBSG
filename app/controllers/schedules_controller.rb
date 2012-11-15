@@ -121,13 +121,46 @@ class SchedulesController < ApplicationController
 
   end
 
-  generate_schedule
+  def generate_schedule
     @employees = Employee.find_all_by_business_id(current_user.id)
-    employee_availability = {}
+    employee_availability_by_employee = {}
+    employee_availability_by_shift = {}
 
     @employees.each do |employee|
-      employee_availability[employee.id.to_s] = employee.shift_availability
+      employee_availability_by_employee[employee.id.to_s] = employee.shift_availability
     end
+
+    Shift.all.each do |shift|
+      employees = []
+      employee_availability_by_employee.keys.each do |employee|
+        employees << employee if employee_availability_by_employee[employee].member?(shift.id)
+      end
+
+      employee_availability_by_shift[shift.id.to_s] = employees
+    end
+
+    possible_schedules([], employee_availability_by_shift.drop(0))
+  end
+
+  def possible_schedules(partial_schedule, availabilities)
+    stack = [{partial_schedule: partial_schedule, availabilities: availabilities}]
+    solutions = []
+
+    until stack.empty?
+      context = stack.shift
+      next_shift = context[availabilities].first
+
+      next_shift[1].each do |available_employee|
+        next_partial_schedule = context[:partial_schedule].drop(0) << [next_shift[0], available_employee]
+        if context[:availabilities].size == 1
+          solutions << next_partial_schedule
+        else
+          stack << {partial_schedule: next_partial_schedule, availabilities: context[:availabilities].drop(1)}
+        end
+      end
+    end
+
+    solutions[rand(solutions.length)]
   end
 
 end

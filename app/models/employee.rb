@@ -16,7 +16,7 @@ class Employee < ActiveRecord::Base
 
   def shift_availability
     shift_availability = []
-    shifts = Shifts.find_by_business_id(business_id)
+    shifts = Shift.find_all_by_business_id(business_id)
 
     shifts.each do |shift|
       if self.can_work?(shift)
