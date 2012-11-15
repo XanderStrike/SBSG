@@ -1,4 +1,7 @@
 <%= form_for(@shift) do |f| %>
+  
+  <center>
+
   <% if @shift.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
@@ -21,18 +24,16 @@
     </select>
   </div>
   
-  <div class="field">
-    <%= f.label :start %><br>
-    <%= f.time_select :start, { ampm: true, minute_step: 15, default: (@shift.start || Time.now.midnight)} %>
-  </div>
-  
-  <div>
-    <%= f.label :end %><br>
+  <div class="shift_selects">
+    Start:
+    <%= f.time_select :start, { ampm: true, minute_step: 15, default: (@shift.start || Time.now.midnight)} %><br>
+    End:
     <%= f.time_select :end, { ampm: true, minute_step: 15, default: (@shift.start || Time.now.midnight)} %>
   </div>
   
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+    <%= f.submit "Save", :class => "btn btn-success" %>
 
 <% end %>
+
+</center>

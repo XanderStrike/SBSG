@@ -1,6 +1,7 @@
-<h1>Listing employees</h1>
-
-<table>
+<h1>Employees</h1>
+<h4>Here you can edit, remove, and create your employees.</h4> 
+<center>
+<table class="table table-hover table-striped table-bordered table-condensed">
   <tr>
     <th>Name</th>
     <th>Monday</th>
@@ -26,11 +27,12 @@
       <% end %>
     <% end %>
     <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-    <td><%= link_to 'Delete', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Fire', employee, method: :delete, data: { confirm: 'Are you sure? :(' } %></td>
   </tr>
 <% end %>
 </table>
+<br><%= link_to 'New Employee', new_employee_path, :class => "btn" %>
 
-<br />
+</center>
 
-<%= link_to 'New Employee', new_employee_path %>
+

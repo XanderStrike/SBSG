@@ -66,19 +66,17 @@ class SchedulesController < ApplicationController
   #   -employees are assigned randomly, instead of intelligently
   #     i.e. if employee A has open availability and B can only close, A will sometimes be assigned
   #       the closing shift and nobody will be able to open
-  #   -employees are sometimes assigned seven days in a row, or 40+ hours per week
   #   -we probably will want to hold the data temporarily in some better form than a string for
   #       checking things
+  #
   # GET /schedules/generate
   def generate
-
-    @errors = []
 
     # initialize output hash
     output_emp, length = {}, {}
 
     # generate schedule
-    5.times do |x|
+    25.times do |x|
       @errors = []
       @employees.each do |e|
         output_emp[e.name] = "#{e.name}"
