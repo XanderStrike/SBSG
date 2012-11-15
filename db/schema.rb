@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121101042523) do
+ActiveRecord::Schema.define(:version => 20121115070243) do
 
   create_table "availabilities", :force => true do |t|
     t.integer  "employee_id"
@@ -41,9 +41,21 @@ ActiveRecord::Schema.define(:version => 20121101042523) do
 
   create_table "schedules", :force => true do |t|
     t.string   "schedule"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
     t.integer  "business_id"
+    t.string   "monday",      :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+    t.string   "tuesday",     :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+    t.string   "wednesday",   :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+    t.string   "thursday",    :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+    t.string   "friday",      :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+    t.string   "saturday",    :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+    t.string   "sunday",      :default => "'---\n:width: 0\n:height: 0\n:depth: 0\n'"
+  end
+
+  create_table "sessions", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "shifts", :force => true do |t|
