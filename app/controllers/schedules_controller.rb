@@ -66,17 +66,19 @@ class SchedulesController < ApplicationController
   #   -employees are assigned randomly, instead of intelligently
   #     i.e. if employee A has open availability and B can only close, A will sometimes be assigned
   #       the closing shift and nobody will be able to open
+  #   -employees are sometimes assigned seven days in a row, or 40+ hours per week
   #   -we probably will want to hold the data temporarily in some better form than a string for
   #       checking things
-  #
   # GET /schedules/generate
   def generate
+
+    @errors = []
 
     # initialize output hash
     output_emp, length = {}, {}
 
     # generate schedule
-    25.times do |x|
+    5.times do |x|
       @errors = []
       @employees.each do |e|
         output_emp[e.name] = "#{e.name}"
@@ -137,7 +139,7 @@ class SchedulesController < ApplicationController
       employee_availability_by_shift[shift.id.to_s] = employees
     end
 
-    possible_schedules([], employee_availability_by_shift.drop(0))
+    solution = possible_schedules([], employee_availability_by_shift.drop(0))
   end
 
   def possible_schedules(partial_schedule, availabilities)
@@ -146,7 +148,8 @@ class SchedulesController < ApplicationController
 
     until stack.empty?
       context = stack.shift
-      next_shift = context[availabilities].first
+puts "context: #{context.inspect}"
+      next_shift = context[:availabilities].first
 
       next_shift[1].each do |available_employee|
         next_partial_schedule = context[:partial_schedule].drop(0) << [next_shift[0], available_employee]
@@ -158,7 +161,34 @@ class SchedulesController < ApplicationController
       end
     end
 
-    solutions[rand(solutions.length)]
+    save_schedule(solutions[rand(solutions.length)])
   end
 
+  def save_schedule(schedule)
+    schedule_hash = {}
+    schedule.each do |filled_shift|
+      schedule_hash[filled_shift[0]] = filled_shift[1]
+    end
+
+    @schedule = Schedule.new
+    @schedule.monday = shifts_for_day(schedule_hash, 0)
+    @schedule.tuesday = shifts_for_day(schedule_hash, 1)
+    @schedule.wednesday = shifts_for_day(schedule_hash, 2)
+    @schedule.thursday = shifts_for_day(schedule_hash, 3)
+    @schedule.friday = shifts_for_day(schedule_hash, 4)
+    @schedule.saturday = shifts_for_day(schedule_hash, 5)
+    @schedule.sunday = shifts_for_day(schedule_hash, 6)
+    @schedule.business_id = current_user.id
+    @schedule.save
+  end
+
+  def shifts_for_day(schedule, day)
+    shifts_for_day = {}
+
+    Shift.find_all_by_day(day).each do |shift|
+      shifts_for_day[shift.id.to_s] = schedule[shift.id.to_s]
+    end
+
+    shifts_for_day
+  end
 end
