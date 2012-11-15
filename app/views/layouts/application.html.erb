@@ -10,19 +10,19 @@
    <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "STARGATE", '#', id: "logo" %>
+      <% if signed_in? %>
+      <%= link_to current_user.name, '/dashboard', id: "logo" %>
       <nav>
-        <ul class="nav pull-right">
-          <% if signed_in? %>
+        <ul class="nav pull-right">          
             <li><a href="/dashboard" >Dashboard</a></li>
             <li><a href= <%= employees_path %> >Employees</a></li>
             <li><a href= <%= shifts_path %> >Shifts</a></li>
             <li><%= link_to "Logout", signout_path, method: 'delete' %></li>
-          <% else %>
-            <li><a href="">Log In</a></li>
-          <% end %>
         </ul>
       </nav>
+      <% else %>
+      <%= link_to "STARGATE", "#", id: "logo" %>
+      <% end %>
     </div>
   </div>
   </header>

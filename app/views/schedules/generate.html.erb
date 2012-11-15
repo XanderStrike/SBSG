@@ -1,4 +1,5 @@
 <h1>New Schedule</h1>
+<h4>Here's your new schedule! One day you'll be able to edit it before saving!</h4>
 
 <%= render 'table' %>
 
@@ -7,3 +8,5 @@
 	<%= "Oops! This generation has generated errors!" unless @errors.empty? %><br>
 	<% @errors.each do |e| %><font color="red"><%= e %></font><br><% end %>
 </div>
+
+<a href="/dashboard" class="btn btn-success">Done</a>

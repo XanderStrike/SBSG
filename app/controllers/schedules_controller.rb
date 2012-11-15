@@ -77,7 +77,7 @@ class SchedulesController < ApplicationController
     output_emp, length = {}, {}
 
     # generate schedule
-    5.times do |x|
+    25.times do |x|
       @errors = []
       @employees.each do |e|
         output_emp[e.name] = "#{e.name}"
