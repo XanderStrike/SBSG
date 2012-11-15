@@ -13,12 +13,13 @@
 </center>
 	
 </div>
+<br/>
 
 <div>
 	<h3>Shifts:</h3>
 	<center>
 		<a href= <%= shifts_path %> >Add/Edit</a>
-		<table>
+		<table class="table table-hover table-striped table-bordered table-condensed">
 			<% @shifts.count.times do |x| %>
 				<% if x%4 == 0 %> <tr></tr> <% end %>
 				<td><%= @shifts[x].to_s %></td>
@@ -27,13 +28,14 @@
 		<table>
 	</center>
 </div>
+<br/>
 
 <div>
 	<h3>Employees:</h3>
 
 	<center>
 		<a href= <%= employees_path %> >Add/Edit</a>
-		<table>
+		<table class="table table-hover table-striped table-bordered table-condensed">
 			<% @employees.count.times do |x| %>
 				<% if x%5 == 0 %> <tr></tr> <% end %>
 				<td><%= @employees[x].name %> <%= link_to 'Edit', edit_employee_path(@employees[x]) %></td>
