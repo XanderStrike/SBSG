@@ -1,33 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  mon_start: 2012-10-22 18:06:06
-  mon_end: 2012-10-22 18:06:06
-  tue_start: 2012-10-22 18:06:06
-  tue_end: 2012-10-22 18:06:06
-  wed_start: 2012-10-22 18:06:06
-  wed_end: 2012-10-22 18:06:06
-  thu_start: 2012-10-22 18:06:06
-  thu_end: 2012-10-22 18:06:06
-  fri_start: 2012-10-22 18:06:06
-  fri_end: 2012-10-22 18:06:06
-  sat_start: 2012-10-22 18:06:06
-  sat_end: 2012-10-22 18:06:06
-  sun_start: 2012-10-22 18:06:06
-  sun_end: 2012-10-22 18:06:06
+  business_id: 1
+  start: 2012-10-22 18:00:00
+  end: 2012-10-22 21:45:00
+  day: 0
 
 two:
-  mon_start: 2012-10-22 18:06:06
-  mon_end: 2012-10-22 18:06:06
-  tue_start: 2012-10-22 18:06:06
-  tue_end: 2012-10-22 18:06:06
-  wed_start: 2012-10-22 18:06:06
-  wed_end: 2012-10-22 18:06:06
-  thu_start: 2012-10-22 18:06:06
-  thu_end: 2012-10-22 18:06:06
-  fri_start: 2012-10-22 18:06:06
-  fri_end: 2012-10-22 18:06:06
-  sat_start: 2012-10-22 18:06:06
-  sat_end: 2012-10-22 18:06:06
-  sun_start: 2012-10-22 18:06:06
-  sun_end: 2012-10-22 18:06:06
+  business_id: 1
+  start: 2012-10-22 18:00:00
+  end: 2012-10-22 21:45:00
+  day: 1

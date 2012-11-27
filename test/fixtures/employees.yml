@@ -2,36 +2,10 @@
 
 one:
   name: MyString
-  mon_start: 2012-10-22 19:14:55
-  mon_end: 2012-10-22 19:14:55
-  tue_start: 2012-10-22 19:14:55
-  tue_end: 2012-10-22 19:14:55
-  wed_start: 2012-10-22 19:14:55
-  wed_end: 2012-10-22 19:14:55
-  thu_start: 2012-10-22 19:14:55
-  thu_end: 2012-10-22 19:14:55
-  fri_start: 2012-10-22 19:14:55
-  fri_end: 2012-10-22 19:14:55
-  sat_start: 2012-10-22 19:14:55
-  sat_end: 2012-10-22 19:14:55
-  sun_start: 2012-10-22 19:14:55
-  sun_end: 2012-10-22 19:14:55
-  days_off: MyString
+  email: OtherSring
+  business_id: 1
 
 two:
   name: MyString
-  mon_start: 2012-10-22 19:14:55
-  mon_end: 2012-10-22 19:14:55
-  tue_start: 2012-10-22 19:14:55
-  tue_end: 2012-10-22 19:14:55
-  wed_start: 2012-10-22 19:14:55
-  wed_end: 2012-10-22 19:14:55
-  thu_start: 2012-10-22 19:14:55
-  thu_end: 2012-10-22 19:14:55
-  fri_start: 2012-10-22 19:14:55
-  fri_end: 2012-10-22 19:14:55
-  sat_start: 2012-10-22 19:14:55
-  sat_end: 2012-10-22 19:14:55
-  sun_start: 2012-10-22 19:14:55
-  sun_end: 2012-10-22 19:14:55
-  days_off: MyString
+  email: OtherSring
+  business_id: 1
