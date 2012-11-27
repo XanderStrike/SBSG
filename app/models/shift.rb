@@ -2,6 +2,8 @@ require 'no_overtime_validator'
 
 class Shift < ActiveRecord::Base
   attr_accessible :start, :end, :day, :business_id
+
+  validates :day, inclusion: {in: [0,1,2,3,4,5,6], message: "is invalid."}
   validates_with NoOvertimeValidator
 
   

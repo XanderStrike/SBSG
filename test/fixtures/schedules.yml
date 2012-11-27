@@ -2,6 +2,8 @@
 
 one:
   schedule: MyString
+  business_id: 1
 
 two:
   schedule: MyString
+  business_id: 1
