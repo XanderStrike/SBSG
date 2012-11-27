@@ -71,7 +71,7 @@ class SchedulesController < ApplicationController
   #       checking things
   # GET /schedules/generate
   def generate
-
+    @employees = Employee.find_all_by_business_id(current_user.id)
     @errors = []
 
     # initialize output hash
