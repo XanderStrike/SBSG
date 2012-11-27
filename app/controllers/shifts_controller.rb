@@ -46,19 +46,30 @@ class ShiftsController < ApplicationController
   # POST /shifts
   # POST /shifts.json
   def create
-    @shift = Shift.new(params[:shift])
-    @shift.business_id = current_user.id
-    @shift.day = params[:day]
+  
+	days = params[:day]
+	saved = true
+  
+	days.each do |d|
+		@shift = Shift.new(params[:shift])
+		@shift.business_id = current_user.id
+		@shift.day = d[0]
 
-    respond_to do |format|
-      if @shift.save
-        format.html { redirect_to shifts_path, notice: 'Shift was successfully created.' }
-        format.json { render json: shifts_path, status: :created, location: @shift }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @shift.errors, status: :unprocessable_entity }
-      end
-    end
+	  if !@shift.save
+		saved = false
+	  end
+	end
+	
+	respond_to do |format|
+		if saved
+			format.html { redirect_to shifts_path, notice: 'Shift was successfully created.' }
+			format.json { render json: shifts_path, status: :created, location: @shift }
+		else
+			format.html { render action: "new" }
+			format.json { render json: @shift.errors, status: :unprocessable_entity }
+		end
+	end
+	
   end
 
   # PUT /shifts/1
