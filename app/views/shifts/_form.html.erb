@@ -19,7 +19,8 @@
     <label for="shift_day">Day</label>
     <select name="day">
       <% 7.times do |day| %>
-        <option value=<%= day %>><%= human_readable_day(day) %></option>
+		<% if(@shift != nil) then @shift.day == day ? sel = "selected=\"selected\"" : sel = "" end %>
+        <option value=<%= day %> <%= sel %> ><%= human_readable_day(day) %></option>
       <% end %>
     </select>
   </div>
