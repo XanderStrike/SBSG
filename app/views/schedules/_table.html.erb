@@ -1,10 +1,23 @@
 <table class="table table-hover table-striped table-bordered table-condensed">
-<% schedule = @schedule.schedule %>
+<% schedule = @schedule.to_csv_em %>
   <% schedule.split(%r{;\s*}).each do |line| %>
   	<tr>
 	  <% line.split(%r{,\s*}).each do |cell| %>
 	  	<td><%= cell %></td>
 	  <% end %>
   	</tr>
+  <% end %>
+</table>
+
+<br><br>
+
+<table class="table table-hover table-striped table-bordered table-condensed">
+<% schedule = @schedule.to_csv_sh %>
+  <% schedule.split(%r{;\s*}).each do |line| %>
+    <tr>
+    <% line.split(%r{,\s*}).each do |cell| %>
+      <td><%= cell %></td>
+    <% end %>
+    </tr>
   <% end %>
 </table>
