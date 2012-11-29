@@ -154,21 +154,14 @@ puts "context: #{context.inspect}"
   end
 
   def save_schedule(schedule)
-    schedule_hash = {}
-    schedule.each do |filled_shift|
-      schedule_hash[filled_shift[0]] = filled_shift[1]
-    end
-
     @schedule = Schedule.new
-    @schedule.monday = shifts_for_day(schedule_hash, 0)
-    @schedule.tuesday = shifts_for_day(schedule_hash, 1)
-    @schedule.wednesday = shifts_for_day(schedule_hash, 2)
-    @schedule.thursday = shifts_for_day(schedule_hash, 3)
-    @schedule.friday = shifts_for_day(schedule_hash, 4)
-    @schedule.saturday = shifts_for_day(schedule_hash, 5)
-    @schedule.sunday = shifts_for_day(schedule_hash, 6)
     @schedule.business_id = current_user.id
     @schedule.save
+
+    schedule.each do |filled_shift|
+      assignment = Assignment.new(schedule_id: @schedule.id, shift_id: filled_shift[0], employee_id: filled_shift[1])
+      assignment.save
+    end
   end
 
   def shifts_for_day(schedule, day)
