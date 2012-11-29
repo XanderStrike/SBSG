@@ -78,7 +78,9 @@ class SchedulesController < ApplicationController
 
     # initialize output hash
     length = {}
-    output_hashes = []
+
+    # create schedule
+    @schedule = Schedule.create(business_id: current_user.id)
 
     # generate schedule
     5.times do |x|
@@ -88,13 +90,12 @@ class SchedulesController < ApplicationController
       end
 
       7.times do |day|
-        output_hashes[day] = {} # new
         @emps = @employees.shuffle
         Shift.where(day: day, business_id: current_user.id).each do |s|
           assigned = false
           @emps.each do |e|
             if e.can_work?(s) && (length[e.name] + s.length) <= 40
-              output_hashes[day][s.id] = e.id # new
+              Assignment.create(schedule_id: @schedule.id, shift_id: s.id, employee_id: e.id)
               length[e.name] += s.length
               @emps.delete(e)
               assigned = true
@@ -104,14 +105,9 @@ class SchedulesController < ApplicationController
           @errors += ["Shift #{s.to_s} couldn't be assigned!"] unless assigned
         end
       end
+      
       break if @errors.empty?
     end
-
-    # save the new schedule
-    @schedule = Schedule.new
-    @schedule.schedule = output_hashes.to_json
-    @schedule.business_id = current_user.id
-    @schedule.save
   end
 
   def generate_schedule
