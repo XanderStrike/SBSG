@@ -132,7 +132,9 @@ class SchedulesController < ApplicationController
       employee_availability_by_shift[shift.id.to_s] = employees
     end
 
-    solution = possible_schedules([], employee_availability_by_shift.drop(0))
+    solutions = possible_schedules([], employee_availability_by_shift.clone)
+
+    save_schedule(solutions[rand(solutions.length)])
   end
 
   def possible_schedules(partial_schedule, availabilities)
@@ -141,20 +143,37 @@ class SchedulesController < ApplicationController
 
     until stack.empty?
       context = stack.shift
-puts "context: #{context.inspect}"
       next_shift = context[:availabilities].first
 
       next_shift[1].each do |available_employee|
-        next_partial_schedule = context[:partial_schedule].drop(0) << [next_shift[0], available_employee]
+        shift_id = next_shift[0]
+        next_partial_schedule = context[:partial_schedule].clone << [shift_id, available_employee]
         if context[:availabilities].size == 1
           solutions << next_partial_schedule
         else
-          stack << {partial_schedule: next_partial_schedule, availabilities: context[:availabilities].drop(1)}
+          next_availabilities = remove_conflicting_shifts(available_employee, shift_id, context[:availabilities].clone.delete(shift_id))
+
+          stack << {partial_schedule: next_partial_schedule, availabilities: next_availabilities}
         end
       end
     end
 
-    save_schedule(solutions[rand(solutions.length)])
+    solutions
+  end
+
+  def remove_conflicting_shifts(employee_id, shift_id, availabilities)
+    shift = Shift.find(shift_id)
+    shift_availability = availabilities[shift_id.to_s]
+    potentially_conflicting_shifts = Shift.find_all_by_day_and_business_id(shift.day,shift.business_id)
+
+    potentially_conflicting_shifts.each do |other_shift|
+      if shift.contains?(other_shift) || (shift.length + other_shift.length > 8)
+        shift_availability.delete(other_shift.id)
+      end
+    end
+
+    availabilities[shift_id.to_s] = shift_availability
+    availabilities
   end
 
   def save_schedule(schedule)
@@ -166,15 +185,5 @@ puts "context: #{context.inspect}"
       assignment = Assignment.new(schedule_id: @schedule.id, shift_id: filled_shift[0], employee_id: filled_shift[1])
       assignment.save
     end
-  end
-
-  def shifts_for_day(schedule, day)
-    shifts_for_day = {}
-
-    Shift.find_all_by_day(day).each do |shift|
-      shifts_for_day[shift.id.to_s] = schedule[shift.id.to_s]
-    end
-
-    shifts_for_day
   end
 end

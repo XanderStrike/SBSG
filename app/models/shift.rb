@@ -7,6 +7,10 @@ class Shift < ActiveRecord::Base
   validates_with NoOvertimeValidator
 
   
+  def contains?(shift)
+    before?(self.start, shift.start) && before?(shift.end, self.end)
+  end
+
   def length
   	(self.end - self.start) / 3600
   end
