@@ -1,66 +1,57 @@
-require 'json'
-
 class Schedule < ActiveRecord::Base
   attr_accessible :schedule, :business_id
 
-  def emp2shift
-    # This will be operating under the assumption schedule contains a json blob for all the days. DGAF.
-    stuff = JSON.parse(self.schedule)
-    new_arr = []
-
-    stuff.count.times do |x|
-      new_arr[x] = {}
-      stuff[x].keys.each do |key|
-        new_arr[x][stuff[x][key]] = key
-      end
-    end
-    return new_arr
-  end
-
   def to_csv_em
-    array = self.emp2shift
-    csv_hash = {}
+    a = Assignment.find_all_by_schedule_id(id)
+    csv_hash = {"1" => ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
 
     7.times do |day|
-      array[day].keys.each do |e_id|
-        e = Employee.find_by_id(e_id.to_i)
-        s = Shift.find_by_id(array[day][e_id].to_i)
+      days_assignments = a.select { |ass| Shift.find_by_id(ass.shift_id).day == day}
+      days_assignments.each do |asn|
+        e = Employee.find_by_id(asn.employee_id)
+        s = Shift.find_by_id(asn.shift_id)
         csv_hash[e.name] = Array.new(7, "OFF") if csv_hash[e.name].nil?
         csv_hash[e.name][day] = s.times
       end
     end
 
-    output = "e2s,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday;"
-    csv_hash.keys.sort.each do |name|
-      output += ";#{name}"
-      csv_hash[name].each do |shift|
-        output += ",#{shift}"
-      end
-    end
-
-    return output
+    return to_csv(csv_hash)
   end
 
-  # Delicious code repetition. I'll fix this later.
   def to_csv_sh
-    array = JSON.parse(self.schedule)
-    csv_hash = {}
 
+    a = Assignment.find_all_by_schedule_id(id)
+    csv_hash = {"1" => ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
+
+    weeks_assignments, count = [], Array.new(7, 0)
     7.times do |day|
-      array[day].keys.each do |s_id|
-        s = Shift.find_by_id(s_id.to_i)
-        e = Employee.find_by_id(array[day][s_id].to_i)
-        csv_hash[s.times] = Array.new(7, "N/A") if csv_hash[s.times].nil?
-        csv_hash[s.times][day] = e.name
+      days_assignments = a.select { |ass| Shift.find_by_id(ass.shift_id).day == day}
+      weeks_assignments << days_assignments
+      count[day] = days_assignments.count
+    end
+
+    count.max.times do |x|
+      csv_hash["#{x+2}"] = Array.new(7, "")
+      7.times do |day|
+        s = Shift.find_by_id(weeks_assignments[day][x].shift_id) rescue nil
+        e = Employee.find_by_id(weeks_assignments[day][x].employee_id) rescue nil
+        csv_hash["#{x+2}"][day] = "#{s.times} #{e.name}" unless s.nil?
       end
     end
 
-    output = "s2e,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday;"
-    csv_hash.keys.sort.each do |times|
-      output += ";#{times}"
-      csv_hash[times].each do |name|
-        output += ",#{name}"
+    return to_csv(csv_hash)    
+  end
+
+  private
+
+  def to_csv(hash)
+    output = ""
+    hash.keys.sort.each do |name|
+      output += "#{name}," unless name.to_i > 0
+      hash[name].each do |shift|
+        output += "#{shift},"
       end
+      output += ";"
     end
 
     return output
