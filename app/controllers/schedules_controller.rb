@@ -1,3 +1,5 @@
+require 'json'
+
 class SchedulesController < ApplicationController
   # GET /schedules
   # GET /schedules.json
@@ -75,23 +77,24 @@ class SchedulesController < ApplicationController
     @errors = []
 
     # initialize output hash
-    output_emp, length = {}, {}
+    length = {}
+    output_hashes = []
 
     # generate schedule
     5.times do |x|
       @errors = []
       @employees.each do |e|
-        output_emp[e.name] = "#{e.name}"
         length["#{e.name}"] = 0
       end
 
       7.times do |day|
+        output_hashes[day] = {} # new
         @emps = @employees.shuffle
         Shift.where(day: day, business_id: current_user.id).each do |s|
           assigned = false
           @emps.each do |e|
             if e.can_work?(s) && (length[e.name] + s.length) <= 40
-              output_emp[e.name] += ",#{s.start.strftime("%I:%M%p")} - #{s.end.strftime("%I:%M%p")}"
+              output_hashes[day][s.id] = e.id # new
               length[e.name] += s.length
               @emps.delete(e)
               assigned = true
@@ -100,25 +103,15 @@ class SchedulesController < ApplicationController
           end
           @errors += ["Shift #{s.to_s} couldn't be assigned!"] unless assigned
         end
-        @emps.each do |e|
-          output_emp[e.name] += ",OFF"
-        end
       end
       break if @errors.empty?
     end
 
-    # csvify hash for schedule
-    output = ",Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday;"
-    output_emp.keys.sort.each do |name|
-      output += "#{output_emp[name]};"
-    end
-
     # save the new schedule
     @schedule = Schedule.new
-    @schedule.schedule = output
+    @schedule.schedule = output_hashes.to_json
     @schedule.business_id = current_user.id
     @schedule.save
-
   end
 
   def generate_schedule
