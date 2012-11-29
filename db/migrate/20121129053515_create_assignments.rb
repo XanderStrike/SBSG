@@ -1,4 +1,4 @@
-class CreateAssignment < ActiveRecord::Migration
+class CreateAssignments < ActiveRecord::Migration
   def up
     create_table :assignments do |t|
       t.integer :schedule_id
