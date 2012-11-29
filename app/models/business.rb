@@ -1,5 +1,5 @@
 class Business < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :current_schedule_id
   has_secure_password
 
   before_save { |business| business.email = email.downcase }
