@@ -1,13 +1,12 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <title>SBSG</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+<title>Contact Us</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-   <header class="navbar navbar-fixed-top">
+<header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
       <% if signed_in? %>
@@ -27,25 +26,12 @@
   </div>
   </header>
 
-  <div class="container">
 
-    <%= yield %>
 
-    <footer class="footer">
-  <small>
-    &copy;2012 SBSG. All rights reserved.
-  </small>
-  <nav>
-    <ul>
-      
-      <li><%= link_to "About", 'about' %></li>
-      <li><%= link_to "Contact", 'contact' %></li>
+<h3>Contact Us</h3>
 
-    </ul>
-  </nav>
-</footer>
-    
-  </div>
-
+Here is our contact information
 </body>
+
+
 </html>

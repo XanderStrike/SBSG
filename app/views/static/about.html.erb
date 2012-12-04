@@ -1,13 +1,13 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>SBSG</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+<h3> About Us</h3>
+
+<title>About Us</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-</head>
+<div>
 <body>
-   <header class="navbar navbar-fixed-top">
+<header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
       <% if signed_in? %>
@@ -27,25 +27,10 @@
   </div>
   </header>
 
-  <div class="container">
-
-    <%= yield %>
-
-    <footer class="footer">
-  <small>
-    &copy;2012 SBSG. All rights reserved.
-  </small>
-  <nav>
-    <ul>
-      
-      <li><%= link_to "About", 'about' %></li>
-      <li><%= link_to "Contact", 'contact' %></li>
-
-    </ul>
-  </nav>
-</footer>
-    
-  </div>
-
+	<center>
+	SBSG is a schedule generating website which allows you the user to effectivly create a schedule for your business based on your employees availabilities. It was created by ... in the fall of 2012.  (add more...)
+	</center>
 </body>
+</div>
+
 </html>
