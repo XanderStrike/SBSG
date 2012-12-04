@@ -1,5 +1,7 @@
 SBSG::Application.routes.draw do
-  resources :dashboard
+
+  match '/dashboard', to: 'dashboard#index'
+  get 'dashboard/reports'
 
   get 'schedules/generate'
   get 'schedules/generate_schedule'

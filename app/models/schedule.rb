@@ -1,6 +1,15 @@
 class Schedule < ActiveRecord::Base
   attr_accessible :schedule, :business_id
 
+  before_destroy :kill_assignments
+
+  def kill_assignments
+    asnmnts = Assignment.find_all_by_schedule_id(self.id)
+    asnmnts.each do |a|
+      a.destroy
+    end
+  end
+
   def to_csv_em
     a = Assignment.find_all_by_schedule_id(id)
     csv_hash = {"1" => ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
@@ -41,6 +50,8 @@ class Schedule < ActiveRecord::Base
 
     return to_csv(csv_hash)    
   end
+
+  
 
   private
 
