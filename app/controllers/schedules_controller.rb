@@ -72,7 +72,7 @@ class SchedulesController < ApplicationController
   #   -we probably will want to hold the data temporarily in some better form than a string for
   #       checking things
   # GET /schedules/generate
-  def generate_2
+  def generate
     @employees = Employee.find_all_by_business_id(current_user.id)
     @errors = []
 
@@ -110,7 +110,7 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def generate
+  def generate_new
     @employees = Employee.find_all_by_business_id(current_user.id)
     employee_availability_by_employee = {}
     employee_availability_by_shift = {}
