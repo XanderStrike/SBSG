@@ -15,7 +15,7 @@ class Schedule < ActiveRecord::Base
     csv_hash = {"1" => ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
 
     7.times do |day|
-      days_assignments = a.select { |ass| Shift.find_by_id(ass.shift_id).day == day}
+      days_assignments = a.select { |asn| Shift.find_by_id(asn.shift_id).day == day}
       days_assignments.each do |asn|
         e = Employee.find_by_id(asn.employee_id)
         s = Shift.find_by_id(asn.shift_id)
@@ -34,7 +34,7 @@ class Schedule < ActiveRecord::Base
 
     weeks_assignments, count = [], Array.new(7, 0)
     7.times do |day|
-      days_assignments = a.select { |ass| Shift.find_by_id(ass.shift_id).day == day}
+      days_assignments = a.select { |asn| Shift.find_by_id(asn.shift_id).day == day}
       weeks_assignments << days_assignments
       count[day] = days_assignments.count
     end
