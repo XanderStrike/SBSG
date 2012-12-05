@@ -1,12 +1,21 @@
 class Schedule < ActiveRecord::Base
   attr_accessible :schedule, :business_id
 
+  before_destroy :kill_assignments
+
+  def kill_assignments
+    asnmnts = Assignment.find_all_by_schedule_id(self.id)
+    asnmnts.each do |a|
+      a.destroy
+    end
+  end
+
   def to_csv_em
     a = Assignment.find_all_by_schedule_id(id)
     csv_hash = {"1" => ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
 
     7.times do |day|
-      days_assignments = a.select { |ass| Shift.find_by_id(ass.shift_id).day == day}
+      days_assignments = a.select { |asn| Shift.find_by_id(asn.shift_id).day == day}
       days_assignments.each do |asn|
         e = Employee.find_by_id(asn.employee_id)
         s = Shift.find_by_id(asn.shift_id)
@@ -25,7 +34,7 @@ class Schedule < ActiveRecord::Base
 
     weeks_assignments, count = [], Array.new(7, 0)
     7.times do |day|
-      days_assignments = a.select { |ass| Shift.find_by_id(ass.shift_id).day == day}
+      days_assignments = a.select { |asn| Shift.find_by_id(asn.shift_id).day == day}
       weeks_assignments << days_assignments
       count[day] = days_assignments.count
     end
@@ -41,6 +50,8 @@ class Schedule < ActiveRecord::Base
 
     return to_csv(csv_hash)    
   end
+
+  
 
   private
 

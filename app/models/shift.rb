@@ -11,6 +11,10 @@ class Shift < ActiveRecord::Base
     before?(self.start, shift.start) && before?(shift.end, self.end)
   end
 
+  def before?(time1, time2)
+    time1.hour < time2.hour || time1.hour == time2.hour && time1.min <= time2.min
+  end
+
   def length
   	(self.end - self.start) / 3600
   end

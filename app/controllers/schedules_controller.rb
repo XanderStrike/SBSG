@@ -110,7 +110,7 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def generate_schedule
+  def generate_new
     @employees = Employee.find_all_by_business_id(current_user.id)
     employee_availability_by_employee = {}
     employee_availability_by_shift = {}
@@ -130,6 +130,7 @@ class SchedulesController < ApplicationController
 
     solutions = possible_schedules([], employee_availability_by_shift.clone)
 
+    @errors = []
     save_schedule(solutions[rand(solutions.length)])
   end
 
@@ -147,7 +148,11 @@ class SchedulesController < ApplicationController
         if context[:availabilities].size == 1
           solutions << next_partial_schedule
         else
-          next_availabilities = remove_conflicting_shifts(available_employee, shift_id, context[:availabilities].clone.delete(shift_id))
+puts "context[:availabilities]: #{context[:availabilities].inspect}"
+          availabilities_clone = context[:availabilities].clone
+          availabilities_clone.delete(shift_id)
+puts "context[:availabilities]: #{context[:availabilities].inspect}"
+          next_availabilities = remove_conflicting_shifts(available_employee, shift_id, availabilities_clone)
 
           stack << {partial_schedule: next_partial_schedule, availabilities: next_availabilities}
         end
@@ -158,17 +163,20 @@ class SchedulesController < ApplicationController
   end
 
   def remove_conflicting_shifts(employee_id, shift_id, availabilities)
+puts "availabilities: #{availabilities.inspect}"
     shift = Shift.find(shift_id)
-    shift_availability = availabilities[shift_id.to_s]
+    #shift_availability = availabilities[shift_id.to_s]
+puts "shift_id: #{shift_id}"
+#puts "shift_availability: #{shift_availability.inspect}"
     potentially_conflicting_shifts = Shift.find_all_by_day_and_business_id(shift.day,shift.business_id)
 
     potentially_conflicting_shifts.each do |other_shift|
       if shift.contains?(other_shift) || (shift.length + other_shift.length > 8)
-        shift_availability.delete(other_shift.id)
+        availabilities[other_shift.id.to_s].delete(employee_id) unless availabilities[other_shift.id.to_s].nil?
       end
     end
 
-    availabilities[shift_id.to_s] = shift_availability
+    #availabilities[shift_id.to_s] = shift_availability
     availabilities
   end
 

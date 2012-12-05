@@ -1,0 +1,12 @@
+<h1>Reports</h1>
+
+<table class="table table-hover table-striped table-bordered table-condensed">
+  <tr><th>Name</th><th>This Week</th><th>Since Forever</th></tr>
+  <% @report.each do |row| %>
+    <tr>
+      <% row.each do |cell| %>
+        <td><%= cell %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
