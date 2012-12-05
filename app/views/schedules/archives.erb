@@ -1,0 +1,22 @@
+<h1>Schedules</h1>
+<h4>Here are your schedules that you have generated in the past for each week.</h4>
+
+
+<table class="table table-hover table-striped table-bordered table-condensed">
+	<tr>
+		<th>Generated Date</th>
+		<th># Unfilled Positions</th>
+	</tr>
+		
+<% @Schedules.each do |schedule| %>
+		
+	<tr>
+		<td><%= schedule.date %></td>
+		<td><%= schedule.left %></td>
+	</tr>
+		
+<% end %>
+
+</table>
+
+<a href="/dashboard" class="btn btn-success">Done</a>
