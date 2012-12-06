@@ -10,7 +10,7 @@ class ShiftsController < ApplicationController
     @count = []
 
     7.times do |day|
-      @shifts[day] = Shift.where(business_id: current_user.id, day: day).sort { |a,b| a.start <=> b.start }
+      @shifts[day] = Shift.order("start desc").where(business_id: current_user.id, day: day)
       @count[day] = @shifts[day].count
     end
 
