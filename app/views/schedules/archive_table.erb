@@ -1,0 +1,7 @@
+<h1>Schedule for: <%= @schedule.pretty_date %></h1>
+<%= render 'table' %>
+<br><br>
+<a href="/dashboard/reports?s=<%= @schedule.id %>">View Report for this Schedule</a>
+<br><br>
+
+<a href="/schedules/archives" class="btn btn-success">Done</a>

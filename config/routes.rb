@@ -1,8 +1,13 @@
 SBSG::Application.routes.draw do
-  resources :dashboard
+
+  match '/dashboard', to: 'dashboard#index'
+  get 'dashboard/reports'
 
   get 'schedules/generate'
-  post 'schedules/save_schedule'
+  post 'schedules/save'
+  
+  get 'schedules/archives'
+  match '/schedules/archive_table/:id' => 'schedules#archive_table'
 
   resources :businesses
   resources :shifts

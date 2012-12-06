@@ -75,7 +75,7 @@ class SchedulesController < ApplicationController
   #   -we probably will want to hold the data temporarily in some better form than a string for
   #       checking things
   # GET /schedules/generate
-  def generate_2
+  def generate
     @employees = Employee.find_all_by_business_id(current_user.id)
     @errors = []
 
@@ -113,7 +113,7 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def generate
+  def generate_new
     @employees = Employee.find_all_by_business_id(current_user.id)
     employee_availability_by_employee = {}
     employee_availability_by_shift = {}
@@ -191,7 +191,7 @@ class SchedulesController < ApplicationController
     availabilities
   end
 
-  def save_schedule
+  def save
     schedule = JSON.parse(params[:schedule])
     @schedule = Schedule.new
     @schedule.business_id = current_user.id
@@ -203,5 +203,15 @@ class SchedulesController < ApplicationController
     end
 
     redirect_to dashboard_index_path
+  end
+  
+  def archives
+	@Schedules = Schedule.all
+  @Schedules = @Schedules.sort { |a,b| b.created_at <=> a.created_at }
+  end
+  
+  def archive_table
+	id = params[:id]
+	@schedule = Schedule.find_by_id(id)
   end
 end
