@@ -1,7 +1,8 @@
 <h1>Reports</h1>
+<h2>Report for Schedule Created on <%= @schedule.created_at.localtime.strftime("%A, %D at %I:%M%p")  %></h2>
 
 <table class="table table-hover table-striped table-bordered table-condensed">
-  <tr><th>Name</th><th>This Week</th><th>Since Forever</th></tr>
+  <tr><th>Name</th><th>This Schedule</th><th>Since Forever</th></tr>
   <% @report.each do |row| %>
     <tr>
       <% row.each do |cell| %>

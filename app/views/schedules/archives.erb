@@ -12,7 +12,10 @@
 		
 	<tr>
 		<td><%= schedule.created_at %></td>
-		<td><a href='/schedules/archive_table/<%= schedule.id %>'>View Schedule</a></td>
+		<td>
+			<a href='/schedules/archive_table/<%= schedule.id %>'>View Schedule</a> - 
+			<a href='/dashboard/reports?s=<%= schedule.id %>'>View Report</a>
+		</td>
 	</tr>
 		
 <% end %>
