@@ -26,12 +26,22 @@ class EmployeeTest < ActiveSupport::TestCase
   def test_employee__must_have_valid_email
     employee = Employee.new(business_id: 1, name: "test",  email: "test@test.com")
 
-    exception = assert_raise ActiveRecord::RecordInvalid do
+    #exception = assert_raise ActiveRecord::RecordInvalid do
       employee.save!
-    end
-    assert_equal "Validation failed: Email is invalid.", exception.message
+   # end
+    #assert_equal "Validation failed: Email is invalid.", exception.message
+    assert_equal "test@test.com", employee.email
   end
 
+  def test_employee__must_have_valid_name
+    employee = Employee.new(business_id: 1, name: "test",  email: "test@test.com")
+
+    #exception = assert_raise ActiveRecord::RecordInvalid do
+      employee.save!
+   # end
+    #assert_equal "Validation failed: Email is invalid.", exception.message
+    assert_equal "test", employee.name
+  end
 
 
 
