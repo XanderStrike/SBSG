@@ -1,5 +1,5 @@
 require 'test_helper'
-=begin
+
 class EmployeeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
@@ -7,12 +7,12 @@ class EmployeeTest < ActiveSupport::TestCase
 
 
   def test_employee
-    employee = Employee.new(business_id: 1, name: joe, email: joe)
+    employee = Employee.new(business_id: 1, name: "joe", email: "joe")
 
     assert employee.save!
-    assert_equal joe, employee.name
+    assert_equal "joe", employee.name
   end
-
+=begin
   def should_create_employee do
   	assert_difference('Employee.count') do
   		employee :create, :employee => { :name => 'Some Name'}
@@ -21,18 +21,20 @@ class EmployeeTest < ActiveSupport::TestCase
   end
   
 
-
+=end
 
   def test_employee__must_have_valid_email
-    employee = Employee.new(business_id: 1, name: test,  email: test)
+    employee = Employee.new(business_id: 1, name: "test",  email: "test@test.com")
 
     exception = assert_raise ActiveRecord::RecordInvalid do
       employee.save!
     end
     assert_equal "Validation failed: Email is invalid.", exception.message
   end
+
+
+
+
+
+
 end
-=end
-
-
-
