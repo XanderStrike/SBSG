@@ -4,7 +4,7 @@ SBSG::Application.routes.draw do
   get 'dashboard/reports'
 
   get 'schedules/generate'
-  get 'schedules/generate_schedule'
+  post 'schedules/save'
   
   get 'schedules/archives'
   match '/schedules/archive_table/:id' => 'schedules#archive_table'

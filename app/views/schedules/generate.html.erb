@@ -1,5 +1,5 @@
 <h1>New Schedule</h1>
-<h4>Here's your new schedule! One day you'll be able to edit it before saving!</h4>
+<h4>Here's a possible schedule.  Make sure to save it below if you plan to use it!</h4>
 
 <%= render 'table' %>
 
@@ -9,4 +9,5 @@
 	<% @errors.each do |e| %><font color="red"><%= e %></font><br><% end %>
 </div>
 
-<a href="/dashboard" class="btn btn-success">Done</a>
+<%= button_to "Save", schedules_save_path(params.merge(schedule: @schedule.to_json)), class: "btn btn-success" %>
+<a href="/dashboard" class="btn">Cancel</a>

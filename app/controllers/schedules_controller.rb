@@ -1,6 +1,9 @@
 require 'json'
 
 class SchedulesController < ApplicationController
+
+  include SchedulesHelper
+
   # GET /schedules
   # GET /schedules.json
   def index
@@ -131,7 +134,22 @@ class SchedulesController < ApplicationController
     solutions = possible_schedules([], employee_availability_by_shift.clone)
 
     @errors = []
-    save_schedule(solutions[rand(solutions.length)])
+    prepare_tables(solutions[rand(solutions.length)])
+    #save_schedule(solutions[rand(solutions.length)])
+  end
+
+  def prepare_tables(solution)
+    shift_assignments, employee_assignments = [[],[],[],[],[],[],[]], [[],[],[],[],[],[],[]]
+
+    solution.each do |assignment|
+      day = Shift.find(assignment[0]).day
+      shift_assignments[day] << assignment[0]
+      employee_assignments[day] << assignment[1]
+    end
+
+    @schedule= solution
+    @employee_schedule = schedule_by_employee_csv(shift_assignments, employee_assignments)
+    @shift_schedule = schedule_by_shift_csv(shift_assignments, employee_assignments)
   end
 
   def possible_schedules(partial_schedule, availabilities)
@@ -148,10 +166,8 @@ class SchedulesController < ApplicationController
         if context[:availabilities].size == 1
           solutions << next_partial_schedule
         else
-puts "context[:availabilities]: #{context[:availabilities].inspect}"
           availabilities_clone = context[:availabilities].clone
           availabilities_clone.delete(shift_id)
-puts "context[:availabilities]: #{context[:availabilities].inspect}"
           next_availabilities = remove_conflicting_shifts(available_employee, shift_id, availabilities_clone)
 
           stack << {partial_schedule: next_partial_schedule, availabilities: next_availabilities}
@@ -163,11 +179,7 @@ puts "context[:availabilities]: #{context[:availabilities].inspect}"
   end
 
   def remove_conflicting_shifts(employee_id, shift_id, availabilities)
-puts "availabilities: #{availabilities.inspect}"
     shift = Shift.find(shift_id)
-    #shift_availability = availabilities[shift_id.to_s]
-puts "shift_id: #{shift_id}"
-#puts "shift_availability: #{shift_availability.inspect}"
     potentially_conflicting_shifts = Shift.find_all_by_day_and_business_id(shift.day,shift.business_id)
 
     potentially_conflicting_shifts.each do |other_shift|
@@ -176,11 +188,11 @@ puts "shift_id: #{shift_id}"
       end
     end
 
-    #availabilities[shift_id.to_s] = shift_availability
     availabilities
   end
 
-  def save_schedule(schedule)
+  def save
+    schedule = JSON.parse(params[:schedule])
     @schedule = Schedule.new
     @schedule.business_id = current_user.id
     @schedule.save
@@ -189,6 +201,8 @@ puts "shift_id: #{shift_id}"
       assignment = Assignment.new(schedule_id: @schedule.id, shift_id: filled_shift[0], employee_id: filled_shift[1])
       assignment.save
     end
+
+    redirect_to dashboard_index_path
   end
   
   def archives
@@ -199,5 +213,4 @@ puts "shift_id: #{shift_id}"
 	id = params[:id]
 	@schedule = Schedule.find_by_id(id)
   end
-  
 end
