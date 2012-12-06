@@ -9,5 +9,5 @@
 	<% @errors.each do |e| %><font color="red"><%= e %></font><br><% end %>
 </div>
 
-<%= button_to "Save", schedules_save_schedule_path(params.merge(schedule: @schedule.to_json)), class: "btn btn-success" %>
+<%= button_to "Save", schedules_save_path(params.merge(schedule: @schedule.to_json)), class: "btn btn-success" %>
 <a href="/dashboard" class="btn">Cancel</a>
