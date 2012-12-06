@@ -11,7 +11,7 @@
 <% @Schedules.each do |schedule| %>
 		
 	<tr>
-		<td><%= schedule.created_at %></td>
+		<td><%= schedule.pretty_date %></td>
 		<td><a href='/schedules/archive_table/<%= schedule.id %>'>View Schedule</a></td>
 	</tr>
 		

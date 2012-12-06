@@ -54,6 +54,10 @@ class Schedule < ActiveRecord::Base
   def unfilled_positions
 	
   end
+  
+  def pretty_date
+	return created_at.localtime.strftime("%A, %D at %I:%Mp")
+  end
 
   
   private
