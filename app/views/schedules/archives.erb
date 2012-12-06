@@ -5,14 +5,14 @@
 <table class="table table-hover table-striped table-bordered table-condensed">
 	<tr>
 		<th>Generated Date</th>
-		<th># Unfilled Positions</th>
+		<th>View Schedules</th>
 	</tr>
 		
 <% @Schedules.each do |schedule| %>
 		
 	<tr>
-		<td><%= schedule.date %></td>
-		<td><%= schedule.left %></td>
+		<td><%= schedule.created_at %></td>
+		<td><a href='/schedules/archive_table/<%= schedule.id %>'>View Schedule</a></td>
 	</tr>
 		
 <% end %>

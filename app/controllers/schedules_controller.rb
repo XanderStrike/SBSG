@@ -190,4 +190,14 @@ puts "shift_id: #{shift_id}"
       assignment.save
     end
   end
+  
+  def archives
+	@Schedules = Schedule.all
+  end
+  
+  def archive_table
+	id = params[:id]
+	@schedule = Schedule.find_by_id(id)
+  end
+  
 end

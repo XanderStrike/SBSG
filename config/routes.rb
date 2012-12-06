@@ -5,6 +5,9 @@ SBSG::Application.routes.draw do
 
   get 'schedules/generate'
   get 'schedules/generate_schedule'
+  
+  get 'schedules/archives'
+  match '/schedules/archive_table/:id' => 'schedules#archive_table'
 
   resources :businesses
   resources :shifts

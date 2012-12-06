@@ -51,8 +51,11 @@ class Schedule < ActiveRecord::Base
     return to_csv(csv_hash)    
   end
 
-  
+  def unfilled_positions
+	
+  end
 
+  
   private
 
   def to_csv(hash)
@@ -67,4 +70,5 @@ class Schedule < ActiveRecord::Base
 
     return output
   end
+  
 end
