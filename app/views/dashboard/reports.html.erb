@@ -2,7 +2,7 @@
 <h2>Report for Schedule Created on <%= @schedule.pretty_date  %></h2>
 
 <table class="table table-hover table-striped table-bordered table-condensed">
-  <tr><th>Name</th><th>This Schedule</th><th>Since Forever</th></tr>
+  <tr><th style="width: 50%">Name</th><th>This Schedule</th><th>Total as of <%= (@schedule.created_at + (7*24*60*60)).localtime.strftime("%D") %></th></tr>
   <% @report.each do |row| %>
     <tr>
       <% row.each do |cell| %>

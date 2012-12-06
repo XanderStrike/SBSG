@@ -25,7 +25,7 @@ class DashboardController < ApplicationController
       hours_week = 0
       Assignment.find_all_by_employee_id(e.id).each do |a|
         shift = Shift.find_by_id(a.shift_id)
-        hours_total += shift.length
+        hours_total += shift.length if a.schedule_id <= @schedule.id
         hours_week += shift.length if a.schedule_id == @schedule.id
       end
       assignments += [[e.name, hours_week, hours_total]]
