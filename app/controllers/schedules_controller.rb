@@ -192,8 +192,7 @@ puts "shift_id: #{shift_id}"
   end
   
   def archives
-	@Schedules = Schedule.all
-  @Schedules = @Schedules.sort { |a,b| b.created_at <=> a.created_at }
+    @Schedules = Schedule.order("created_at desc").where(business_id: current_user.id).all
   end
   
   def archive_table
