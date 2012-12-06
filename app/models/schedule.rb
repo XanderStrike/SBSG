@@ -42,6 +42,6 @@ class Schedule < ActiveRecord::Base
   end
   
   def pretty_date
-	return created_at.localtime.strftime("%A, %D at %I:%Mp")
+	return created_at.localtime.strftime("%A, %D at %I:%M%p")
   end
 end
