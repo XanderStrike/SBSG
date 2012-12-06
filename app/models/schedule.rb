@@ -16,7 +16,7 @@ class Schedule < ActiveRecord::Base
     shift_assignments, employee_assignments = [], []
 
     7.times do |day|
-      days_assignments = assignments.select { |asn| Shift.find_by_id(asn.shift_id).day == day}
+      days_assignments = assignments.select {|assignment| Shift.find(assignment.shift_id).day == day}
       shift_assignments << days_assignments.map {|assignment| assignment.shift_id}
       employee_assignments << days_assignments.map {|assignment| assignment.employee_id}
     end
@@ -29,7 +29,7 @@ class Schedule < ActiveRecord::Base
     shift_assignments, employee_assignments = [], []
 
     7.times do |day|
-      days_assignments = assignments.select { |asn| Shift.find_by_id(asn.shift_id).day == day}
+      days_assignments = assignments.select { |assignment| Shift.find(assignment.shift_id).day == day}
       shift_assignments << days_assignments.map {|assignment| assignment.shift_id}
       employee_assignments << days_assignments.map {|assignment| assignment.employee_id}
     end

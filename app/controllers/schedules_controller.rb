@@ -75,7 +75,7 @@ class SchedulesController < ApplicationController
   #   -we probably will want to hold the data temporarily in some better form than a string for
   #       checking things
   # GET /schedules/generate
-  def generate
+  def generate_new
     @employees = Employee.find_all_by_business_id(current_user.id)
     @errors = []
 
@@ -113,7 +113,8 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def generate_new
+  def generate
+    @errors = []
     @employees = Employee.find_all_by_business_id(current_user.id)
     employee_availability_by_employee = {}
     employee_availability_by_shift = {}
@@ -122,7 +123,7 @@ class SchedulesController < ApplicationController
       employee_availability_by_employee[employee.id.to_s] = employee.shift_availability
     end
 
-    Shift.all.each do |shift|
+    Shift.find_all_by_business_id(current_user.id).each do |shift|
       employees = []
       employee_availability_by_employee.keys.each do |employee|
         employees << employee if employee_availability_by_employee[employee].member?(shift.id)
@@ -133,9 +134,12 @@ class SchedulesController < ApplicationController
 
     solutions = possible_schedules([], employee_availability_by_shift.clone)
 
-    @errors = []
-    prepare_tables(solutions[rand(solutions.length)])
-    #save_schedule(solutions[rand(solutions.length)])
+    if solutions.empty? 
+      @errors << "No schedule could be generated."
+      @employee_schedule, @shift_schedule = "", ""
+    else
+      prepare_tables(solutions[rand(solutions.length)])
+    end
   end
 
   def prepare_tables(solution)
@@ -184,7 +188,11 @@ class SchedulesController < ApplicationController
 
     potentially_conflicting_shifts.each do |other_shift|
       if shift.contains?(other_shift) || (shift.length + other_shift.length > 8)
-        availabilities[other_shift.id.to_s].delete(employee_id) unless availabilities[other_shift.id.to_s].nil?
+        unless availabilities[other_shift.id.to_s].nil?
+          new_availabilities = availabilities[other_shift.id.to_s].clone
+          new_availabilities.delete(employee_id)
+          availabilities[other_shift.id.to_s] = new_availabilities
+        end
       end
     end
 
