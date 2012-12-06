@@ -10,7 +10,12 @@ class DashboardController < ApplicationController
 
   def reports
     @report = []
-    schedule = Schedule.find_all_by_business_id(current_user.id).last
+
+    if params[:s].to_i > 0
+      @schedule = Schedule.find_by_id(params[:s].to_i)
+    else
+      @schedule = Schedule.find_all_by_business_id(current_user.id).last
+    end
 
     employees = Employee.find_all_by_business_id(current_user.id)
 
@@ -21,14 +26,11 @@ class DashboardController < ApplicationController
       Assignment.find_all_by_employee_id(e.id).each do |a|
         shift = Shift.find_by_id(a.shift_id)
         hours_total += shift.length
-        hours_week += shift.length if a.schedule_id == schedule.id
+        hours_week += shift.length if a.schedule_id == @schedule.id
       end
       assignments += [[e.name, hours_week, hours_total]]
     end
 
-
-    
     @report = assignments
-
   end
 end
