@@ -2,7 +2,7 @@ SBSG::Application.routes.draw do
   resources :dashboard
 
   get 'schedules/generate'
-  get 'schedules/generate_schedule'
+  post 'schedules/save_schedule'
 
   resources :businesses
   resources :shifts
